@@ -1,0 +1,431 @@
+[
+  {
+    "id": 0,
+    "file": "part_00.stl",
+    "original_center_m": [
+      0.079643,
+      0.26969050000000006,
+      0.0015
+    ],
+    "area_mm2": 443.3590110000002,
+    "holes": 3,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 1,
+    "file": "part_01.stl",
+    "original_center_m": [
+      0.10715,
+      0.2661735,
+      0.0015
+    ],
+    "area_mm2": 442.09806799999996,
+    "holes": 5,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 2,
+    "file": "part_02.stl",
+    "original_center_m": [
+      0.139098,
+      0.26144700000000004,
+      0.0015
+    ],
+    "area_mm2": 1009.6244500000007,
+    "holes": 1,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 3,
+    "file": "part_03.stl",
+    "original_center_m": [
+      0.0290665,
+      0.2594305,
+      0.0015
+    ],
+    "area_mm2": 2279.835654500002,
+    "holes": 1,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 4,
+    "file": "part_04.stl",
+    "original_center_m": [
+      0.062295,
+      0.259869,
+      0.0015
+    ],
+    "area_mm2": 403.2794190000001,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 5,
+    "file": "part_05.stl",
+    "original_center_m": [
+      0.17054199999999997,
+      0.258756,
+      0.0015
+    ],
+    "area_mm2": 790.4109800000019,
+    "holes": 7,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 6,
+    "file": "part_06.stl",
+    "original_center_m": [
+      0.129888,
+      0.2503825,
+      0.0015
+    ],
+    "area_mm2": 256.32058799999976,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 7,
+    "file": "part_07.stl",
+    "original_center_m": [
+      0.10347700000000001,
+      0.2421895,
+      0.0015
+    ],
+    "area_mm2": 131.55667199999988,
+    "holes": 1,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 8,
+    "file": "part_08.stl",
+    "original_center_m": [
+      0.033514,
+      0.221088,
+      0.0015
+    ],
+    "area_mm2": 1060.377213,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 9,
+    "file": "part_09.stl",
+    "original_center_m": [
+      0.15735900000000003,
+      0.22055400000000003,
+      0.0015
+    ],
+    "area_mm2": 816.3926335000003,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 10,
+    "file": "part_10.stl",
+    "original_center_m": [
+      0.0246905,
+      0.19537300000000002,
+      0.0015
+    ],
+    "area_mm2": 514.2537569999998,
+    "holes": 4,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 11,
+    "file": "part_11.stl",
+    "original_center_m": [
+      0.072633,
+      0.20403500000000002,
+      0.0015
+    ],
+    "area_mm2": 675.1868314999997,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 12,
+    "file": "part_12.stl",
+    "original_center_m": [
+      0.0857025,
+      0.1990945,
+      0.0015
+    ],
+    "area_mm2": 1094.9047949999992,
+    "holes": 5,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 13,
+    "file": "part_13.stl",
+    "original_center_m": [
+      0.12191750000000001,
+      0.1958165,
+      0.0015
+    ],
+    "area_mm2": 1071.953191499999,
+    "holes": 5,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 14,
+    "file": "part_14.stl",
+    "original_center_m": [
+      0.1573455,
+      0.19967500000000002,
+      0.0015
+    ],
+    "area_mm2": 793.6932590000006,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 15,
+    "file": "part_15.stl",
+    "original_center_m": [
+      0.099409,
+      0.19192599999999999,
+      0.0015
+    ],
+    "area_mm2": 676.1201310000002,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 16,
+    "file": "part_16.stl",
+    "original_center_m": [
+      0.10910500000000001,
+      0.19151200000000002,
+      0.0015
+    ],
+    "area_mm2": 676.1204810000002,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 17,
+    "file": "part_17.stl",
+    "original_center_m": [
+      0.0110605,
+      0.17581400000000003,
+      0.0015
+    ],
+    "area_mm2": 236.06100449999997,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 18,
+    "file": "part_18.stl",
+    "original_center_m": [
+      0.04709,
+      0.17515750000000002,
+      0.0015
+    ],
+    "area_mm2": 391.28847049999996,
+    "holes": 4,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 19,
+    "file": "part_19.stl",
+    "original_center_m": [
+      0.143623,
+      0.168667,
+      0.0015
+    ],
+    "area_mm2": 629.5892074999992,
+    "holes": 4,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 20,
+    "file": "part_20.stl",
+    "original_center_m": [
+      0.17010000000000003,
+      0.168571,
+      0.0015
+    ],
+    "area_mm2": 629.5866894999994,
+    "holes": 4,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 21,
+    "file": "part_21.stl",
+    "original_center_m": [
+      0.0155915,
+      0.1606795,
+      0.0015
+    ],
+    "area_mm2": 265.1539729999997,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 22,
+    "file": "part_22.stl",
+    "original_center_m": [
+      0.05175300000000001,
+      0.1535705,
+      0.0015
+    ],
+    "area_mm2": 424.1015794999999,
+    "holes": 3,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 23,
+    "file": "part_23.stl",
+    "original_center_m": [
+      0.10742099999999999,
+      0.121613,
+      0.0015
+    ],
+    "area_mm2": 450.225875,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 24,
+    "file": "part_24.stl",
+    "original_center_m": [
+      0.15827199999999997,
+      0.1158515,
+      0.0015
+    ],
+    "area_mm2": 2449.5365130000014,
+    "holes": 12,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 25,
+    "file": "part_25.stl",
+    "original_center_m": [
+      0.1055435,
+      0.0905785,
+      0.0015
+    ],
+    "area_mm2": 460.92285850000013,
+    "holes": 1,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 26,
+    "file": "part_26.stl",
+    "original_center_m": [
+      0.123646,
+      0.0859685,
+      0.0015
+    ],
+    "area_mm2": 1030.9871094999992,
+    "holes": 3,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 27,
+    "file": "part_27.stl",
+    "original_center_m": [
+      0.046985,
+      0.07136300000000001,
+      0.0015
+    ],
+    "area_mm2": 10182.760884500003,
+    "holes": 16,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 29,
+    "file": "part_29.stl",
+    "original_center_m": [
+      0.16224149999999998,
+      0.055619,
+      0.0015
+    ],
+    "area_mm2": 2239.896720457949,
+    "holes": 11,
+    "boundary_opening_repair_mm": 0.002,
+    "watertight": true
+  },
+  {
+    "id": 30,
+    "file": "part_30.stl",
+    "original_center_m": [
+      0.1136135,
+      0.051474000000000006,
+      0.0015
+    ],
+    "area_mm2": 71.45453750000003,
+    "holes": 1,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 31,
+    "file": "part_31.stl",
+    "original_center_m": [
+      0.1337915,
+      0.050064000000000004,
+      0.0015
+    ],
+    "area_mm2": 778.1043165,
+    "holes": 2,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 33,
+    "file": "part_33.stl",
+    "original_center_m": [
+      0.1105835,
+      0.0307945,
+      0.0015
+    ],
+    "area_mm2": 639.3925674999995,
+    "holes": 4,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  },
+  {
+    "id": 34,
+    "file": "part_34.stl",
+    "original_center_m": [
+      0.161966,
+      0.015064500000000002,
+      0.0015
+    ],
+    "area_mm2": 655.468365,
+    "holes": 4,
+    "boundary_opening_repair_mm": 0,
+    "watertight": true
+  }
+]

@@ -1,0 +1,385 @@
+{
+  "generated_at_utc": "2026-10-15T06:57:46.420959+00:00",
+  "model_sha256": "ba5615cd6dcf8b4817d39ee46a34a8cd16bebc908601fc81ff3a82980c30a04a",
+  "mujoco_version": "3.16.0",
+  "trimesh_version": "5.1.1",
+  "seed": 20261015,
+  "scope": "Ideal coupled V1 mechanism; estimated dynamics, not hardware identification.",
+  "checks": {
+    "random_kinematics": {
+      "passed": true,
+      "samples": 100,
+      "max_tcp_error_m": 2.0595777971499126e-16,
+      "tolerance_m": 1e-08
+    },
+    "level_hand": {
+      "passed": true,
+      "max_tilt_rad": 0.0,
+      "tolerance_rad": 1e-07
+    },
+    "mirrored_jaws": {
+      "passed": true,
+      "max_pad_mirror_or_gap_error_m": 5.898059818321144e-17,
+      "tolerance_m": 1e-08
+    },
+    "compensation_negative_control": {
+      "passed": true,
+      "omitted_compensation_tcp_error_m": 0.05298742378590376,
+      "omitted_compensation_hand_tilt_rad": 0.3999999999999977
+    },
+    "visual_meshes": {
+      "passed": true,
+      "meshes": [
+        {
+          "link": "base",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 4.096803201531036e-05,
+          "faces": 1488
+        },
+        {
+          "link": "yaw",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 2.8639274527653917e-05,
+          "faces": 1788
+        },
+        {
+          "link": "upper",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 8.56191136246816e-06,
+          "faces": 980
+        },
+        {
+          "link": "elbow_comp",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 1.6401699078416833e-06,
+          "faces": 272
+        },
+        {
+          "link": "forearm",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 5.077819261105903e-06,
+          "faces": 616
+        },
+        {
+          "link": "hand",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 2.5642686064886038e-06,
+          "faces": 700
+        },
+        {
+          "link": "left_finger",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 1.311544749701532e-06,
+          "faces": 1016
+        },
+        {
+          "link": "right_finger",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 1.285856270150831e-06,
+          "faces": 904
+        },
+        {
+          "link": "upper_parallel",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 2.036310498029611e-06,
+          "faces": 328
+        },
+        {
+          "link": "forearm_parallel",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 2.036310487707233e-06,
+          "faces": 328
+        },
+        {
+          "link": "base_servo",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 5.519999935328959e-06,
+          "faces": 12
+        },
+        {
+          "link": "left_servo",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 6.072000031679869e-06,
+          "faces": 12
+        },
+        {
+          "link": "right_servo",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 6.072000031679869e-06,
+          "faces": 12
+        },
+        {
+          "link": "gripper_servo",
+          "passed": true,
+          "watertight": true,
+          "consistent_winding": true,
+          "volume_m3": 5.183999866962429e-06,
+          "faces": 12
+        }
+      ]
+    },
+    "physical_inertias": {
+      "passed": true,
+      "compiled_positive": true,
+      "links": [
+        {
+          "link": "base",
+          "passed": true,
+          "mass_kg": 0.0483422763018612,
+          "principal_moments_kg_m2": [
+            3.84895270796061e-05,
+            8.642176887021568e-05,
+            0.00012099942818301965
+          ]
+        },
+        {
+          "link": "yaw",
+          "passed": true,
+          "mass_kg": 0.03379434339628319,
+          "principal_moments_kg_m2": [
+            1.5177968345445533e-05,
+            1.6702258483826127e-05,
+            2.0659839439471523e-05
+          ]
+        },
+        {
+          "link": "upper",
+          "passed": true,
+          "mass_kg": 0.010103055149092276,
+          "principal_moments_kg_m2": [
+            9.18389067002076e-07,
+            5.708080707107902e-06,
+            6.435717029788244e-06
+          ]
+        },
+        {
+          "link": "elbow_comp",
+          "passed": true,
+          "mass_kg": 0.0019354003796495372,
+          "principal_moments_kg_m2": [
+            5.616410893323741e-08,
+            3.781804872123384e-07,
+            4.3144149465323104e-07
+          ]
+        },
+        {
+          "link": "forearm",
+          "passed": true,
+          "mass_kg": 0.005991826769872481,
+          "principal_moments_kg_m2": [
+            9.078771560742466e-07,
+            6.233375633619934e-06,
+            7.068551497742288e-06
+          ]
+        },
+        {
+          "link": "hand",
+          "passed": true,
+          "mass_kg": 0.003025837002026127,
+          "principal_moments_kg_m2": [
+            3.091145893308058e-07,
+            5.219033895275269e-07,
+            6.994040068594671e-07
+          ]
+        },
+        {
+          "link": "left_finger",
+          "passed": true,
+          "mass_kg": 0.0015476227915413678,
+          "principal_moments_kg_m2": [
+            2.67067089497266e-08,
+            2.054049448618994e-07,
+            2.2979021888634967e-07
+          ]
+        },
+        {
+          "link": "right_finger",
+          "passed": true,
+          "mass_kg": 0.0015173103421311396,
+          "principal_moments_kg_m2": [
+            2.657793993516922e-08,
+            2.053346896867862e-07,
+            2.296366633852486e-07
+          ]
+        },
+        {
+          "link": "upper_parallel",
+          "passed": true,
+          "mass_kg": 0.002402846394184476,
+          "principal_moments_kg_m2": [
+            1.4718122357006167e-08,
+            1.4588808328995183e-06,
+            1.4699946845194814e-06
+          ]
+        },
+        {
+          "link": "forearm_parallel",
+          "passed": true,
+          "mass_kg": 0.002402846394184476,
+          "principal_moments_kg_m2": [
+            1.4718122357006183e-08,
+            1.4588808328995175e-06,
+            1.46999468451948e-06
+          ]
+        },
+        {
+          "link": "base_servo",
+          "passed": true,
+          "mass_kg": 0.009,
+          "principal_moments_kg_m2": [
+            4.0800000000000005e-07,
+            5.047499999999999e-07,
+            6.9675e-07
+          ]
+        },
+        {
+          "link": "left_servo",
+          "passed": true,
+          "mass_kg": 0.009,
+          "principal_moments_kg_m2": [
+            4.709999999999998e-07,
+            5.047499999999998e-07,
+            7.597499999999997e-07
+          ]
+        },
+        {
+          "link": "right_servo",
+          "passed": true,
+          "mass_kg": 0.009,
+          "principal_moments_kg_m2": [
+            4.709999999999998e-07,
+            5.047499999999998e-07,
+            7.597499999999997e-07
+          ]
+        },
+        {
+          "link": "gripper_servo",
+          "passed": true,
+          "mass_kg": 0.009,
+          "principal_moments_kg_m2": [
+            3.509999999999998e-07,
+            5.399999999999998e-07,
+            6.749999999999997e-07
+          ]
+        }
+      ]
+    },
+    "actuator_bindings": {
+      "passed": true,
+      "independent_joints": [
+        "yaw_joint",
+        "shoulder_joint",
+        "elbow_joint",
+        "left_finger_joint"
+      ]
+    },
+    "actuator_saturation": {
+      "passed": true,
+      "positive_step_force_nm": [
+        0.15,
+        0.15,
+        0.15,
+        0.15
+      ],
+      "negative_step_force_nm": [
+        -0.15,
+        -0.15,
+        -0.15,
+        -0.15
+      ],
+      "expected_magnitude_nm": [
+        0.15,
+        0.15,
+        0.15,
+        0.15
+      ]
+    },
+    "dynamic_stability": {
+      "passed": true,
+      "duration_s": 12.0,
+      "timestep_s": 0.001,
+      "steps": 12000,
+      "finite_state": true,
+      "max_abs_qpos_rad": 0.3998623764227324,
+      "max_abs_velocity_rad_s": 0.31409990077511424,
+      "velocity_bound_rad_s": 2.0,
+      "min_tcp_height_m": 0.10630658323481937,
+      "max_contacts": 0,
+      "warnings": {}
+    },
+    "dynamic_couplings": {
+      "passed": true,
+      "max_error_rad": {
+        "elbow_comp_joint": 0.0003950741713784903,
+        "wrist_joint": 0.0003067289740954723,
+        "right_finger_joint": 0.00015254229308273026,
+        "upper_parallel_joint": 3.279740761236811e-05,
+        "forearm_parallel_joint": 0.00021896732896301452
+      },
+      "tolerance_rad": 0.001,
+      "max_hand_tilt_rad": 0.00014385870050532897,
+      "hand_tilt_tolerance_rad": 0.002
+    },
+    "actuator_force_limits": {
+      "passed": true,
+      "max_abs_force_nm": {
+        "base": 0.0053182772994450865,
+        "shoulder": 0.016752796903358735,
+        "elbow": 0.026570658220628856,
+        "gripper": 0.004528164340209362
+      },
+      "configured_limits_nm": [
+        0.15,
+        0.15,
+        0.15,
+        0.15
+      ]
+    },
+    "dynamic_tracking": {
+      "passed": true,
+      "max_joint_error_rad": {
+        "yaw_joint": 0.008272423282188414,
+        "shoulder_joint": 0.005714829722153744,
+        "elbow_joint": 0.008903024056350945,
+        "left_finger_joint": 0.009203018397849205
+      },
+      "final_joint_error_rad": {
+        "yaw_joint": 2.0974420823082177e-15,
+        "shoulder_joint": 6.853907271397065e-06,
+        "elbow_joint": 0.002413557029571547,
+        "left_finger_joint": 1.6366724642224995e-10
+      },
+      "max_tcp_tracking_error_m": 0.0015540826718800607,
+      "max_joint_error_tolerance_rad": 0.04,
+      "final_error_tolerance_rad": 0.01
+    }
+  },
+  "passed": true,
+  "failed_checks": []
+}

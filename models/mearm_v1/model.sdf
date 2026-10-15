@@ -1,0 +1,786 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sdf version="1.11">
+  <model name="mearm_v1">
+    <!--Reduced MeArm mechanism; native mimic requires Bullet Featherstone.-->
+    <self_collide>false</self_collide>
+    <static>false</static>
+    <link name="base">
+      <pose relative_to="__model__">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>-0.0303282184032 -0.00016237503898 0.00457564118413 0 0 0</pose>
+        <mass>0.0483422763019</mass>
+        <inertia>
+          <ixx>3.87324416251e-05</ixx>
+          <iyy>8.64216964344e-05</iyy>
+          <izz>0.000120756586073</izz>
+          <ixy>7.66930718069e-08</ixy>
+          <ixz>-4.46925751123e-06</ixz>
+          <iyz>-3.48718502705e-08</iyz>
+        </inertia>
+      </inertial>
+      <visual name="base_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/base.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+      <collision name="base_collision_0">
+        <pose>-0.0304 0 0.0015 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.145 0.095 0.003</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <collision name="base_collision_1">
+        <pose>0 0 0.0195 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.06 0.06 0.003</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <link name="yaw">
+      <pose relative_to="base">0 0 0.026 0 0 0</pose>
+      <inertial>
+        <pose>-0.000196149314197 -0.000221966423449 0.0118927222705 0 0 0</pose>
+        <mass>0.0337943433963</mass>
+        <inertia>
+          <ixx>1.52747304503e-05</ixx>
+          <iyy>1.66845661959e-05</iyy>
+          <izz>2.05807696225e-05</izz>
+          <ixy>-2.94237093183e-07</ixy>
+          <ixz>3.58936038931e-07</ixz>
+          <iyz>4.86871849876e-07</iyz>
+        </inertia>
+      </inertial>
+      <visual name="yaw_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/yaw.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+      <collision name="yaw_collision_0">
+        <pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.058 0.046 0.004</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <collision name="yaw_collision_1">
+        <pose>0 0.022 0.02 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.003 0.038</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <collision name="yaw_collision_2">
+        <pose>0 -0.022 0.02 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.05 0.003 0.038</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <link name="upper">
+      <pose relative_to="yaw">0.014 0 0.029 0 -1.57079632679 0</pose>
+      <inertial>
+        <pose>0.0413561556196 -0.00183146914559 0.000608022454317 0 0 0</pose>
+        <mass>0.0101030551491</mass>
+        <inertia>
+          <ixx>9.2136556766e-07</ixx>
+          <iyy>5.7051520802e-06</iyy>
+          <izz>6.43566915603e-06</izz>
+          <ixy>-1.19242635387e-07</ixy>
+          <ixz>5.64025912203e-09</ixz>
+          <iyz>5.65835934949e-09</iyz>
+        </inertia>
+      </inertial>
+      <visual name="upper_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/upper.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+      <collision name="upper_collision_0">
+        <pose>0.04 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.08 0.028 0.009</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <link name="elbow_comp">
+      <pose relative_to="upper">0.08 0 0 0 1.57079632679 0</pose>
+      <inertial>
+        <pose>-0.00782909859952 -0.0145000002384 0.0125784417039 0 0 0</pose>
+        <mass>0.00193540037965</mass>
+        <inertia>
+          <ixx>6.21779483871e-08</ixx>
+          <iyy>4.31441494653e-07</iyy>
+          <izz>3.72166647758e-07</izz>
+          <ixy>-0</ixy>
+          <ixz>4.35934460156e-08</ixz>
+          <iyz>6.10045701758e-23</iyz>
+        </inertia>
+      </inertial>
+      <visual name="elbow_comp_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/elbow_comp.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+    <link name="forearm">
+      <pose relative_to="elbow_comp">0 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.0290699542787 0.00120218525973 0.000484221676951 0 0 0</pose>
+        <mass>0.00599182676987</mass>
+        <inertia>
+          <ixx>1.01016768007e-06</ixx>
+          <iyy>6.13154066503e-06</iyy>
+          <izz>7.06809594234e-06</izz>
+          <ixy>7.30895384898e-07</ixy>
+          <ixz>1.44554284444e-08</ixz>
+          <iyz>1.71614619375e-08</iyz>
+        </inertia>
+      </inertial>
+      <visual name="forearm_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/forearm.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+      <collision name="forearm_collision_0">
+        <pose>0.04 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.08 0.03 0.009</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <link name="hand">
+      <pose relative_to="forearm">0.08 0 0 0 0 0</pose>
+      <inertial>
+        <pose>0.0141036363729 -0.00354565261149 0.00210647550922 0 0 0</pose>
+        <mass>0.00302583700203</mass>
+        <inertia>
+          <ixx>3.17722752812e-07</ixx>
+          <iyy>5.39654554768e-07</iyy>
+          <izz>6.73044678137e-07</izz>
+          <ixy>4.24057876136e-08</ixy>
+          <ixz>-4.87429147495e-09</ixz>
+          <iyz>6.4393315499e-08</iyz>
+        </inertia>
+      </inertial>
+      <visual name="hand_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/hand.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+      <collision name="hand_collision_0">
+        <pose>0.008 0 0.009 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.03 0.025 0.014</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <link name="left_finger">
+      <pose relative_to="hand">0.028 0.009 0 0 0 0</pose>
+      <inertial>
+        <pose>0.00918379233704 -0.000794349037906 -0.00236723780757 0 0 0</pose>
+        <mass>0.00154762279154</mass>
+        <inertia>
+          <ixx>3.10936511745e-08</ixx>
+          <iyy>2.01018506863e-07</iyy>
+          <izz>2.2978971466e-07</izz>
+          <ixy>2.76515089668e-08</ixy>
+          <ixz>3.16524807401e-10</ixz>
+          <iyz>-4.41122371876e-11</iyz>
+        </inertia>
+      </inertial>
+      <visual name="left_finger_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/left_finger.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+      <collision name="left_finger_collision_0">
+        <pose>0.021 -0.007 -0.002 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.025 0.003 0.005</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <link name="right_finger">
+      <pose relative_to="hand">0.028 -0.009 0 0 0 0</pose>
+      <inertial>
+        <pose>0.00915562137596 0.000414559695734 -0.00240822917462 0 0 0</pose>
+        <mass>0.00151731034213</mass>
+        <inertia>
+          <ixx>3.00997010898e-08</ixx>
+          <iyy>2.01812999008e-07</iyy>
+          <izz>2.29636592909e-07</izz>
+          <ixy>-2.48421865051e-08</ixy>
+          <ixz>3.93119509489e-11</ixz>
+          <iyz>4.42819756778e-11</iyz>
+        </inertia>
+      </inertial>
+      <visual name="right_finger_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/right_finger.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+      <collision name="right_finger_collision_0">
+        <pose>0.021 0.007 -0.002 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>0.025 0.003 0.005</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.8</mu>
+              <mu2>0.8</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+    </link>
+    <link name="upper_parallel">
+      <pose relative_to="yaw">-0.021 -0.019 0.045 0 -1.57079632679 0</pose>
+      <inertial>
+        <pose>0.0404268285627 -0.00450000023842 -0.000237646971936 0 0 0</pose>
+        <mass>0.00240284639418</mass>
+        <inertia>
+          <ixx>1.47181223571e-08</ixx>
+          <iyy>1.46999468452e-06</iyy>
+          <izz>1.4588808329e-06</izz>
+          <ixy>-1.22009140352e-22</ixy>
+          <ixz>-4.13066152073e-13</ixz>
+          <iyz>-9.53196408997e-25</iyz>
+        </inertia>
+      </inertial>
+      <visual name="upper_parallel_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/upper_parallel.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+    <link name="forearm_parallel">
+      <pose relative_to="elbow_comp">0.012 -0.014 0.018 0 0 0</pose>
+      <inertial>
+        <pose>0.0394268285627 -0.00150000023842 -0.000237646971936 0 0 0</pose>
+        <mass>0.00240284639418</mass>
+        <inertia>
+          <ixx>1.47181223571e-08</ixx>
+          <iyy>1.46999468452e-06</iyy>
+          <izz>1.4588808329e-06</izz>
+          <ixy>-0</ixy>
+          <ixz>-4.13066152069e-13</ixz>
+          <iyz>-4.76598204498e-25</iyz>
+        </inertia>
+      </inertial>
+      <visual name="forearm_parallel_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/forearm_parallel.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.06 0.48 0.64 1</ambient>
+          <diffuse>0.06 0.48 0.64 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+    <link name="base_servo">
+      <pose relative_to="base">0 0 0.011 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.009</mass>
+        <inertia>
+          <ixx>4.08e-07</ixx>
+          <iyy>6.9675e-07</iyy>
+          <izz>5.0475e-07</izz>
+          <ixy>-0</ixy>
+          <ixz>-0</ixz>
+          <iyz>-0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="base_servo_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/base_servo.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.08 0.12 0.18 1</ambient>
+          <diffuse>0.08 0.12 0.18 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+    <link name="left_servo">
+      <pose relative_to="yaw">0.008 0.029 0.029 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.009</mass>
+        <inertia>
+          <ixx>4.71e-07</ixx>
+          <iyy>5.0475e-07</iyy>
+          <izz>7.5975e-07</izz>
+          <ixy>-0</ixy>
+          <ixz>-0</ixz>
+          <iyz>-0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="left_servo_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/left_servo.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.08 0.12 0.18 1</ambient>
+          <diffuse>0.08 0.12 0.18 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+    <link name="right_servo">
+      <pose relative_to="yaw">0.008 -0.029 0.029 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.009</mass>
+        <inertia>
+          <ixx>4.71e-07</ixx>
+          <iyy>5.0475e-07</iyy>
+          <izz>7.5975e-07</izz>
+          <ixy>-0</ixy>
+          <ixz>-0</ixz>
+          <iyz>-0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="right_servo_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/right_servo.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.08 0.12 0.18 1</ambient>
+          <diffuse>0.08 0.12 0.18 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+    <link name="gripper_servo">
+      <pose relative_to="hand">0.004 0 0.0065 0 0 0</pose>
+      <inertial>
+        <pose>0 0 0 0 0 0</pose>
+        <mass>0.009</mass>
+        <inertia>
+          <ixx>3.51e-07</ixx>
+          <iyy>6.75e-07</iyy>
+          <izz>5.4e-07</izz>
+          <ixy>-0</ixy>
+          <ixz>-0</ixz>
+          <iyz>-0</iyz>
+        </inertia>
+      </inertial>
+      <visual name="gripper_servo_visual">
+        <geometry>
+          <mesh>
+            <uri>model://mearm_v1/meshes/gripper_servo.stl</uri>
+            <scale>1 1 1</scale>
+          </mesh>
+        </geometry>
+        <material>
+          <ambient>0.08 0.12 0.18 1</ambient>
+          <diffuse>0.08 0.12 0.18 1</diffuse>
+          <specular>0.2 0.2 0.2 1</specular>
+        </material>
+      </visual>
+    </link>
+    <frame name="tool" attached_to="hand">
+      <pose relative_to="hand">0.054 0 0 0 0 0</pose>
+    </frame>
+    <joint name="world_fixed" type="fixed">
+      <parent>world</parent>
+      <child>base</child>
+    </joint>
+    <joint name="yaw_joint" type="revolute">
+      <parent>base</parent>
+      <child>yaw</child>
+      <pose relative_to="yaw">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="yaw">0 0 1</xyz>
+        <limit>
+          <lower>-0.785398163397</lower>
+          <upper>0.785398163397</upper>
+          <effort>0.15</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+        </dynamics>
+      </axis>
+    </joint>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>yaw_joint</joint_name>
+      <initial_position>0</initial_position>
+      <use_velocity_commands>true</use_velocity_commands>
+      <cmd_max>0.8</cmd_max>
+    </plugin>
+    <joint name="shoulder_joint" type="revolute">
+      <parent>yaw</parent>
+      <child>upper</child>
+      <pose relative_to="upper">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="upper">0 -1 0</xyz>
+        <limit>
+          <lower>-0.785398163397</lower>
+          <upper>0.785398163397</upper>
+          <effort>0.15</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+        </dynamics>
+      </axis>
+    </joint>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>shoulder_joint</joint_name>
+      <initial_position>0</initial_position>
+      <use_velocity_commands>true</use_velocity_commands>
+      <cmd_max>0.8</cmd_max>
+    </plugin>
+    <joint name="elbow_comp_joint" type="revolute">
+      <parent>upper</parent>
+      <child>elbow_comp</child>
+      <pose relative_to="elbow_comp">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="elbow_comp">0 -1 0</xyz>
+        <limit>
+          <lower>-0.785398163397</lower>
+          <upper>0.785398163397</upper>
+          <effort>0.15</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+        </dynamics>
+        <mimic joint="shoulder_joint" axis="axis">
+          <multiplier>-1</multiplier>
+          <offset>0</offset>
+          <reference>0</reference>
+        </mimic>
+      </axis>
+    </joint>
+    <joint name="elbow_joint" type="revolute">
+      <parent>elbow_comp</parent>
+      <child>forearm</child>
+      <pose relative_to="forearm">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="forearm">0 -1 0</xyz>
+        <limit>
+          <lower>-0.785398163397</lower>
+          <upper>0.785398163397</upper>
+          <effort>0.15</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+        </dynamics>
+      </axis>
+    </joint>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>elbow_joint</joint_name>
+      <initial_position>0</initial_position>
+      <use_velocity_commands>true</use_velocity_commands>
+      <cmd_max>0.8</cmd_max>
+    </plugin>
+    <joint name="wrist_joint" type="revolute">
+      <parent>forearm</parent>
+      <child>hand</child>
+      <pose relative_to="hand">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="hand">0 -1 0</xyz>
+        <limit>
+          <lower>-0.785398163397</lower>
+          <upper>0.785398163397</upper>
+          <effort>0.15</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+        </dynamics>
+        <mimic joint="elbow_joint" axis="axis">
+          <multiplier>-1</multiplier>
+          <offset>0</offset>
+          <reference>0</reference>
+        </mimic>
+      </axis>
+    </joint>
+    <joint name="left_finger_joint" type="revolute">
+      <parent>hand</parent>
+      <child>left_finger</child>
+      <pose relative_to="left_finger">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="left_finger">0 0 1</xyz>
+        <limit>
+          <lower>0</lower>
+          <upper>0.5</upper>
+          <effort>0.15</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+        </dynamics>
+      </axis>
+    </joint>
+    <plugin filename="gz-sim-joint-position-controller-system" name="gz::sim::systems::JointPositionController">
+      <joint_name>left_finger_joint</joint_name>
+      <initial_position>0</initial_position>
+      <use_velocity_commands>true</use_velocity_commands>
+      <cmd_max>0.8</cmd_max>
+    </plugin>
+    <joint name="right_finger_joint" type="revolute">
+      <parent>hand</parent>
+      <child>right_finger</child>
+      <pose relative_to="right_finger">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="right_finger">0 0 1</xyz>
+        <limit>
+          <lower>-0.5</lower>
+          <upper>0</upper>
+          <effort>0.15</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+        </dynamics>
+        <mimic joint="left_finger_joint" axis="axis">
+          <multiplier>-1</multiplier>
+          <offset>0</offset>
+          <reference>0</reference>
+        </mimic>
+      </axis>
+    </joint>
+    <joint name="upper_parallel_joint" type="revolute">
+      <parent>yaw</parent>
+      <child>upper_parallel</child>
+      <pose relative_to="upper_parallel">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="upper_parallel">0 -1 0</xyz>
+        <limit>
+          <lower>-0.785398163397</lower>
+          <upper>0.785398163397</upper>
+          <effort>0.15</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+        </dynamics>
+        <mimic joint="shoulder_joint" axis="axis">
+          <multiplier>1</multiplier>
+          <offset>0</offset>
+          <reference>0</reference>
+        </mimic>
+      </axis>
+    </joint>
+    <joint name="forearm_parallel_joint" type="revolute">
+      <parent>elbow_comp</parent>
+      <child>forearm_parallel</child>
+      <pose relative_to="forearm_parallel">0 0 0 0 0 0</pose>
+      <axis>
+        <xyz expressed_in="forearm_parallel">0 -1 0</xyz>
+        <limit>
+          <lower>-0.785398163397</lower>
+          <upper>0.785398163397</upper>
+          <effort>0.15</effort>
+          <velocity>2</velocity>
+        </limit>
+        <dynamics>
+          <damping>0.005</damping>
+        </dynamics>
+        <mimic joint="elbow_joint" axis="axis">
+          <multiplier>1</multiplier>
+          <offset>0</offset>
+          <reference>0</reference>
+        </mimic>
+      </axis>
+    </joint>
+    <joint name="base_servo_fixed" type="fixed">
+      <parent>base</parent>
+      <child>base_servo</child>
+    </joint>
+    <joint name="left_servo_fixed" type="fixed">
+      <parent>yaw</parent>
+      <child>left_servo</child>
+    </joint>
+    <joint name="right_servo_fixed" type="fixed">
+      <parent>yaw</parent>
+      <child>right_servo</child>
+    </joint>
+    <joint name="gripper_servo_fixed" type="fixed">
+      <parent>hand</parent>
+      <child>gripper_servo</child>
+    </joint>
+    <plugin filename="gz-sim-joint-state-publisher-system" name="gz::sim::systems::JointStatePublisher" />
+  </model>
+</sdf>

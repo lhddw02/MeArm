@@ -1,0 +1,288 @@
+{
+  "mujoco_version": "3.16.0",
+  "python_version": "3.10.22",
+  "method": "physical contact and friction; no pose edits or temporary attachments",
+  "destination_mm": [
+    180,
+    -45,
+    90
+  ],
+  "results": {
+    "red": {
+      "status": "complete",
+      "phase": "complete",
+      "active": false,
+      "color": "red",
+      "error": "",
+      "grasp_mode": "contact",
+      "destination_mm": [
+        180.0,
+        -45.0,
+        90.0
+      ],
+      "cube_position_mm": [
+        181.03303853575227,
+        -45.270475523263386,
+        89.92531448022042
+      ],
+      "placement_error_mm": 1.0704688467669385,
+      "released": true,
+      "history": [
+        {
+          "phase": "open",
+          "time": 0.0
+        },
+        {
+          "phase": "approach",
+          "time": 1.0000000000000007
+        },
+        {
+          "phase": "descend",
+          "time": 2.9999999999997806
+        },
+        {
+          "phase": "close",
+          "time": 5.000000000000004
+        },
+        {
+          "phase": "lift",
+          "time": 7.350000000000789
+        },
+        {
+          "phase": "transfer",
+          "time": 10.350999999999702
+        },
+        {
+          "phase": "lower",
+          "time": 13.35199999999804
+        },
+        {
+          "phase": "release",
+          "time": 16.352999999997003
+        },
+        {
+          "phase": "retreat",
+          "time": 18.602999999999753
+        },
+        {
+          "phase": "settle",
+          "time": 20.603000000002197
+        },
+        {
+          "phase": "complete",
+          "time": 21.10400000000281
+        }
+      ],
+      "maximum_cube_center_z_mm": 128.35462972097838,
+      "other_cubes_max_displacement_mm": 0.07468551977966864,
+      "physics_warnings": []
+    },
+    "green": {
+      "status": "complete",
+      "phase": "complete",
+      "active": false,
+      "color": "green",
+      "error": "",
+      "grasp_mode": "contact",
+      "destination_mm": [
+        180.0,
+        -45.0,
+        90.0
+      ],
+      "cube_position_mm": [
+        179.77583411390682,
+        -45.03706809253831,
+        89.92531448022045
+      ],
+      "placement_error_mm": 0.23917005422315882,
+      "released": true,
+      "history": [
+        {
+          "phase": "open",
+          "time": 0.0
+        },
+        {
+          "phase": "approach",
+          "time": 1.0000000000000007
+        },
+        {
+          "phase": "descend",
+          "time": 2.9999999999997806
+        },
+        {
+          "phase": "close",
+          "time": 5.000000000000004
+        },
+        {
+          "phase": "lift",
+          "time": 7.350000000000789
+        },
+        {
+          "phase": "transfer",
+          "time": 10.350999999999702
+        },
+        {
+          "phase": "lower",
+          "time": 13.35199999999804
+        },
+        {
+          "phase": "release",
+          "time": 16.352999999997003
+        },
+        {
+          "phase": "retreat",
+          "time": 18.602999999999753
+        },
+        {
+          "phase": "settle",
+          "time": 20.603000000002197
+        },
+        {
+          "phase": "complete",
+          "time": 21.10400000000281
+        }
+      ],
+      "maximum_cube_center_z_mm": 124.61619586510957,
+      "other_cubes_max_displacement_mm": 0.09342013283298768,
+      "physics_warnings": []
+    },
+    "blue": {
+      "status": "complete",
+      "phase": "complete",
+      "active": false,
+      "color": "blue",
+      "error": "",
+      "grasp_mode": "contact",
+      "destination_mm": [
+        180.0,
+        -45.0,
+        90.0
+      ],
+      "cube_position_mm": [
+        181.12745846303326,
+        -45.270644958403665,
+        89.92531448022044
+      ],
+      "placement_error_mm": 1.1618903589579332,
+      "released": true,
+      "history": [
+        {
+          "phase": "open",
+          "time": 0.0
+        },
+        {
+          "phase": "approach",
+          "time": 1.0000000000000007
+        },
+        {
+          "phase": "descend",
+          "time": 2.9999999999997806
+        },
+        {
+          "phase": "close",
+          "time": 5.000000000000004
+        },
+        {
+          "phase": "lift",
+          "time": 7.350000000000789
+        },
+        {
+          "phase": "transfer",
+          "time": 10.350999999999702
+        },
+        {
+          "phase": "lower",
+          "time": 13.35199999999804
+        },
+        {
+          "phase": "release",
+          "time": 16.352999999997003
+        },
+        {
+          "phase": "retreat",
+          "time": 18.602999999999753
+        },
+        {
+          "phase": "settle",
+          "time": 20.603000000002197
+        },
+        {
+          "phase": "complete",
+          "time": 21.10400000000281
+        }
+      ],
+      "maximum_cube_center_z_mm": 128.39185764893122,
+      "other_cubes_max_displacement_mm": 0.09999871724255607,
+      "physics_warnings": []
+    },
+    "yellow": {
+      "status": "complete",
+      "phase": "complete",
+      "active": false,
+      "color": "yellow",
+      "error": "",
+      "grasp_mode": "contact",
+      "destination_mm": [
+        180.0,
+        -45.0,
+        90.0
+      ],
+      "cube_position_mm": [
+        180.54484591849268,
+        -45.12533210915084,
+        89.92531448022045
+      ],
+      "placement_error_mm": 0.564041788653177,
+      "released": true,
+      "history": [
+        {
+          "phase": "open",
+          "time": 0.0
+        },
+        {
+          "phase": "approach",
+          "time": 1.0000000000000007
+        },
+        {
+          "phase": "descend",
+          "time": 2.9999999999997806
+        },
+        {
+          "phase": "close",
+          "time": 5.000000000000004
+        },
+        {
+          "phase": "lift",
+          "time": 7.350000000000789
+        },
+        {
+          "phase": "transfer",
+          "time": 10.350999999999702
+        },
+        {
+          "phase": "lower",
+          "time": 13.35199999999804
+        },
+        {
+          "phase": "release",
+          "time": 16.352999999997003
+        },
+        {
+          "phase": "retreat",
+          "time": 18.602999999999753
+        },
+        {
+          "phase": "settle",
+          "time": 20.603000000002197
+        },
+        {
+          "phase": "complete",
+          "time": 21.10400000000281
+        }
+      ],
+      "maximum_cube_center_z_mm": 124.46638452452876,
+      "other_cubes_max_displacement_mm": 0.11046812724569224,
+      "physics_warnings": []
+    }
+  }
+}

@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="mearm_v1_cubes">
+  <compiler angle="radian" eulerseq="xyz" meshdir="../models/mearm_v1/meshes" inertiafromgeom="false" />
+  <option timestep="0.001" integrator="implicitfast" gravity="0 0 -9.81" iterations="100" tolerance="1e-10" />
+  <statistic center=".07 0 .08" extent=".40" />
+  <visual>
+    <global offwidth="1440" offheight="1080" azimuth="135" elevation="-25" />
+    <headlight ambient=".4 .4 .4" diffuse=".7 .7 .7" specular=".2 .2 .2" />
+  </visual>
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" rgb1=".85 .88 .90" rgb2=".75 .80 .83" width="256" height="256" />
+    <material name="floor_mat" texture="grid" texrepeat="5 5" reflectance=".04" />
+    <mesh name="base_mesh" file="base.stl" />
+    <mesh name="yaw_mesh" file="yaw.stl" />
+    <mesh name="upper_mesh" file="upper.stl" />
+    <mesh name="elbow_comp_mesh" file="elbow_comp.stl" />
+    <mesh name="forearm_mesh" file="forearm.stl" />
+    <mesh name="hand_mesh" file="hand.stl" />
+    <mesh name="left_finger_mesh" file="left_finger.stl" />
+    <mesh name="right_finger_mesh" file="right_finger.stl" />
+    <mesh name="upper_parallel_mesh" file="upper_parallel.stl" />
+    <mesh name="forearm_parallel_mesh" file="forearm_parallel.stl" />
+    <mesh name="base_servo_mesh" file="base_servo.stl" />
+    <mesh name="left_servo_mesh" file="left_servo.stl" />
+    <mesh name="right_servo_mesh" file="right_servo.stl" />
+    <mesh name="gripper_servo_mesh" file="gripper_servo.stl" />
+  </asset>
+  <worldbody>
+    <light pos="0 -.2 .5" dir="0 0 -1" diffuse=".8 .8 .8" />
+    <geom name="floor" type="plane" size=".5 .5 .01" material="floor_mat" contype="1" conaffinity="3" />
+    <body name="base" pos="0 0 0" quat="1 0 0 0">
+      <inertial pos="-0.0303282184 -0.000162375039 0.004575641184" mass="0.0483422763018612" fullinertia="3.873244163e-05 8.642169643e-05 0.0001207565861 7.669307181e-08 -4.469257511e-06 -3.487185027e-08" />
+      <geom name="base_visual" type="mesh" mesh="base_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+      <geom name="base_collision_0" type="box" size="0.0725 0.0475 0.0015" pos="-0.0304 0 0.0015" quat="1 0 0 0" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction=".9 .01 .001" />
+      <geom name="base_collision_1" type="box" size="0.03 0.03 0.0015" pos="0 0 0.0195" quat="1 0 0 0" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction=".9 .01 .001" />
+      <body name="yaw" pos="0 0 0.026" quat="1 0 0 0">
+        <inertial pos="-0.0001961493142 -0.0002219664234 0.01189272227" mass="0.03379434339628319" fullinertia="1.527473045e-05 1.66845662e-05 2.058076962e-05 -2.942370932e-07 3.589360389e-07 4.868718499e-07" />
+        <joint name="yaw_joint" type="hinge" axis="0 0 1" range="-0.7853981634 0.7853981634" damping=".015" armature="0.00001" frictionloss=".0005" />
+        <geom name="yaw_visual" type="mesh" mesh="yaw_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+        <geom name="yaw_collision_0" type="box" size="0.029 0.023 0.002" pos="0 0 0" quat="1 0 0 0" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction=".9 .01 .001" />
+        <geom name="yaw_collision_1" type="box" size="0.025 0.0015 0.019" pos="0 0.022 0.02" quat="1 0 0 0" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction=".9 .01 .001" />
+        <geom name="yaw_collision_2" type="box" size="0.025 0.0015 0.019" pos="0 -0.022 0.02" quat="1 0 0 0" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction=".9 .01 .001" />
+        <body name="upper" pos="0.014 0 0.029" quat="0.7071067812 -0 -0.7071067812 -0">
+          <inertial pos="0.04135615562 -0.001831469146 0.0006080224543" mass="0.010103055149092276" fullinertia="9.213655677e-07 5.70515208e-06 6.435669156e-06 -1.192426354e-07 5.640259122e-09 5.658359349e-09" />
+          <joint name="shoulder_joint" type="hinge" axis="0 -1 0" range="-0.7853981634 0.7853981634" damping=".015" armature="0.00001" frictionloss=".0005" />
+          <geom name="upper_visual" type="mesh" mesh="upper_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+          <geom name="upper_collision_0" type="box" size="0.04 0.014 0.0045" pos="0.04 0 0" quat="1 0 0 0" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction=".9 .01 .001" />
+          <body name="elbow_comp" pos="0.08 0 0" quat="0.7071067812 0 0.7071067812 0">
+            <inertial pos="-0.0078290986 -0.01450000024 0.0125784417" mass="0.0019354003796495372" fullinertia="6.217794839e-08 4.314414947e-07 3.721666478e-07 -0 4.359344602e-08 6.100457018e-23" />
+            <joint name="elbow_comp_joint" type="hinge" axis="0 -1 0" range="-0.7853981634 0.7853981634" damping=".015" armature="0.00001" frictionloss=".0005" />
+            <geom name="elbow_comp_visual" type="mesh" mesh="elbow_comp_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+            <body name="forearm" pos="0 0 0" quat="1 0 0 0">
+              <inertial pos="0.02906995428 0.00120218526 0.000484221677" mass="0.005991826769872481" fullinertia="1.01016768e-06 6.131540665e-06 7.068095942e-06 7.308953849e-07 1.445542844e-08 1.716146194e-08" />
+              <joint name="elbow_joint" type="hinge" axis="0 -1 0" range="-0.7853981634 0.7853981634" damping=".015" armature="0.00001" frictionloss=".0005" />
+              <geom name="forearm_visual" type="mesh" mesh="forearm_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+              <geom name="forearm_collision_0" type="box" size="0.04 0.015 0.0045" pos="0.04 0 0" quat="1 0 0 0" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction=".9 .01 .001" />
+              <body name="hand" pos="0.08 0 0" quat="1 0 0 0">
+                <inertial pos="0.01410363637 -0.003545652611 0.002106475509" mass="0.003025837002026127" fullinertia="3.177227528e-07 5.396545548e-07 6.730446781e-07 4.240578761e-08 -4.874291475e-09 6.43933155e-08" />
+                <joint name="wrist_joint" type="hinge" axis="0 -1 0" range="-0.7853981634 0.7853981634" damping=".015" armature="0.00001" frictionloss=".0005" />
+                <geom name="hand_visual" type="mesh" mesh="hand_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+                <geom name="hand_collision_0" type="box" size="0.015 0.0125 0.007" pos="0.008 0 0.009" quat="1 0 0 0" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction=".9 .01 .001" />
+                <body name="left_finger" pos="0.028 0.009 0" quat="1 0 0 0">
+                  <inertial pos="0.009183792337 -0.0007943490379 -0.002367237808" mass="0.0015476227915413678" fullinertia="3.109365117e-08 2.010185069e-07 2.297897147e-07 2.765150897e-08 3.165248074e-10 -4.411223719e-11" />
+                  <joint name="left_finger_joint" type="hinge" axis="0 0 1" range="0 .7" damping=".015" armature="0.00001" frictionloss=".0005" />
+                  <geom name="left_finger_visual" type="mesh" mesh="left_finger_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+                  <geom name="left_finger_collision_0" type="box" size=".014 .0015 .010" pos="0.021 -0.007 -0.002" quat=".9747941071 0 0 -0.2231063621" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction="2 .02 .002" condim="6" solref=".004 1" solimp=".999 .999 .001" />
+                  <geom name="left_rubber_pad" type="box" size=".014 .0015 .010" pos="0.021 -0.007 -0.002" quat=".9747941071 0 0 -0.2231063621" rgba=".12 .14 .16 1" contype="0" conaffinity="0" group="2" friction="2 .02 .002" condim="6" solref=".004 1" solimp=".999 .999 .001" />
+                </body>
+                <body name="right_finger" pos="0.028 -0.009 0" quat="1 0 0 0">
+                  <inertial pos="0.009155621376 0.0004145596957 -0.002408229175" mass="0.0015173103421311396" fullinertia="3.009970109e-08 2.01812999e-07 2.296365929e-07 -2.484218651e-08 3.931195095e-11 4.428197568e-11" />
+                  <joint name="right_finger_joint" type="hinge" axis="0 0 1" range="-.7 0" damping=".015" armature="0.00001" frictionloss=".0005" />
+                  <geom name="right_finger_visual" type="mesh" mesh="right_finger_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+                  <geom name="right_finger_collision_0" type="box" size=".014 .0015 .010" pos="0.021 0.007 -0.002" quat=".9747941071 0 0 0.2231063621" rgba=".7 .2 .2 .2" contype="2" conaffinity="1" group="3" friction="2 .02 .002" condim="6" solref=".004 1" solimp=".999 .999 .001" />
+                  <geom name="right_rubber_pad" type="box" size=".014 .0015 .010" pos="0.021 0.007 -0.002" quat=".9747941071 0 0 0.2231063621" rgba=".12 .14 .16 1" contype="0" conaffinity="0" group="2" friction="2 .02 .002" condim="6" solref=".004 1" solimp=".999 .999 .001" />
+                </body>
+                <body name="gripper_servo" pos="0.004 0 0.0065" quat="1 0 0 0">
+                  <inertial pos="0 0 0" mass="0.009" fullinertia="3.51e-07 6.75e-07 5.4e-07 -0 -0 -0" />
+                  <geom name="gripper_servo_visual" type="mesh" mesh="gripper_servo_mesh" rgba="0.08 0.12 0.18 1" contype="0" conaffinity="0" group="2" />
+                </body>
+                <site name="tcp" pos="0.054 0 0" size=".003" rgba="1 .35 .1 1" />
+              </body>
+            </body>
+            <body name="forearm_parallel" pos="0.012 -0.014 0.018" quat="1 0 0 0">
+              <inertial pos="0.03942682856 -0.001500000238 -0.0002376469719" mass="0.002402846394184476" fullinertia="1.471812236e-08 1.469994685e-06 1.458880833e-06 -0 -4.130661521e-13 -4.765982045e-25" />
+              <joint name="forearm_parallel_joint" type="hinge" axis="0 -1 0" range="-0.7853981634 0.7853981634" damping=".015" armature="0.00001" frictionloss=".0005" />
+              <geom name="forearm_parallel_visual" type="mesh" mesh="forearm_parallel_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+            </body>
+          </body>
+        </body>
+        <body name="upper_parallel" pos="-0.021 -0.019 0.045" quat="0.7071067812 -0 -0.7071067812 -0">
+          <inertial pos="0.04042682856 -0.004500000238 -0.0002376469719" mass="0.002402846394184476" fullinertia="1.471812236e-08 1.469994685e-06 1.458880833e-06 -1.220091404e-22 -4.130661521e-13 -9.53196409e-25" />
+          <joint name="upper_parallel_joint" type="hinge" axis="0 -1 0" range="-0.7853981634 0.7853981634" damping=".015" armature="0.00001" frictionloss=".0005" />
+          <geom name="upper_parallel_visual" type="mesh" mesh="upper_parallel_mesh" rgba="0.06 0.48 0.64 1" contype="0" conaffinity="0" group="2" />
+        </body>
+        <body name="left_servo" pos="0.008 0.029 0.029" quat="1 0 0 0">
+          <inertial pos="0 0 0" mass="0.009" fullinertia="4.71e-07 5.0475e-07 7.5975e-07 -0 -0 -0" />
+          <geom name="left_servo_visual" type="mesh" mesh="left_servo_mesh" rgba="0.08 0.12 0.18 1" contype="0" conaffinity="0" group="2" />
+        </body>
+        <body name="right_servo" pos="0.008 -0.029 0.029" quat="1 0 0 0">
+          <inertial pos="0 0 0" mass="0.009" fullinertia="4.71e-07 5.0475e-07 7.5975e-07 -0 -0 -0" />
+          <geom name="right_servo_visual" type="mesh" mesh="right_servo_mesh" rgba="0.08 0.12 0.18 1" contype="0" conaffinity="0" group="2" />
+        </body>
+      </body>
+      <body name="base_servo" pos="0 0 0.011" quat="1 0 0 0">
+        <inertial pos="0 0 0" mass="0.009" fullinertia="4.08e-07 6.9675e-07 5.0475e-07 -0 -0 -0" />
+        <geom name="base_servo_visual" type="mesh" mesh="base_servo_mesh" rgba="0.08 0.12 0.18 1" contype="0" conaffinity="0" group="2" />
+      </body>
+    </body>
+    <body name="cube_platform" pos=".16 0 0">
+      <geom name="platform_top" size=".08 .08 .004" pos="0 0 .076" rgba=".55 .58 .62 1" type="box" contype="1" conaffinity="3" friction=".8 .01 .001" />
+      <geom name="platform_leg_1" size=".006 .006 .036" pos="-0.065 -0.065 0.036" rgba=".35 .38 .42 1" type="box" contype="1" conaffinity="3" friction=".8 .01 .001" />
+      <geom name="platform_leg_2" size=".006 .006 .036" pos="-0.065 0.065 0.036" rgba=".35 .38 .42 1" type="box" contype="1" conaffinity="3" friction=".8 .01 .001" />
+      <geom name="platform_leg_3" size=".006 .006 .036" pos="0.065 -0.065 0.036" rgba=".35 .38 .42 1" type="box" contype="1" conaffinity="3" friction=".8 .01 .001" />
+      <geom name="platform_leg_4" size=".006 .006 .036" pos="0.065 0.065 0.036" rgba=".35 .38 .42 1" type="box" contype="1" conaffinity="3" friction=".8 .01 .001" />
+    </body>
+    <body name="cube_red" pos="0.13 -0.045 0.09">
+      <freejoint name="cube_red_joint" />
+      <inertial pos="0 0 0" mass="0.008" diaginertia="5.33333333333e-07 5.33333333333e-07 5.33333333333e-07" />
+      <geom name="cube_red_geom" type="box" size="0.01 0.01 0.01" rgba="0.9 0.08 0.07 1" contype="1" conaffinity="3" friction="2 .02 .002" condim="6" solref=".004 1" solimp=".999 .999 .001" />
+    </body>
+    <body name="cube_green" pos="0.18 0 0.09">
+      <freejoint name="cube_green_joint" />
+      <inertial pos="0 0 0" mass="0.008" diaginertia="5.33333333333e-07 5.33333333333e-07 5.33333333333e-07" />
+      <geom name="cube_green_geom" type="box" size="0.01 0.01 0.01" rgba="0.1 0.7 0.2 1" contype="1" conaffinity="3" friction="2 .02 .002" condim="6" solref=".004 1" solimp=".999 .999 .001" />
+    </body>
+    <body name="cube_blue" pos="0.13 0.045 0.09">
+      <freejoint name="cube_blue_joint" />
+      <inertial pos="0 0 0" mass="0.008" diaginertia="5.33333333333e-07 5.33333333333e-07 5.33333333333e-07" />
+      <geom name="cube_blue_geom" type="box" size="0.01 0.01 0.01" rgba="0.08 0.3 0.95 1" contype="1" conaffinity="3" friction="2 .02 .002" condim="6" solref=".004 1" solimp=".999 .999 .001" />
+    </body>
+    <body name="cube_yellow" pos="0.18 0.045 0.09">
+      <freejoint name="cube_yellow_joint" />
+      <inertial pos="0 0 0" mass="0.008" diaginertia="5.33333333333e-07 5.33333333333e-07 5.33333333333e-07" />
+      <geom name="cube_yellow_geom" type="box" size="0.01 0.01 0.01" rgba="1 0.8 0.06 1" contype="1" conaffinity="3" friction="2 .02 .002" condim="6" solref=".004 1" solimp=".999 .999 .001" />
+    </body>
+    <site name="reach_target" type="sphere" pos="0.16 0 0.12" size=".004" rgba=".9 .1 .8 .55" group="1" />
+    <site name="place_target" type="box" pos=".18 -.045 .0805" size=".011 .011 .0005" rgba=".1 .9 .6 0" group="1" />
+  </worldbody>
+  <equality>
+    <joint name="elbow_comp_joint_coupling" joint1="elbow_comp_joint" joint2="shoulder_joint" polycoef="0 -1 0 0 0" solref=".003 1" solimp=".999 .999 .001" />
+    <joint name="wrist_joint_coupling" joint1="wrist_joint" joint2="elbow_joint" polycoef="0 -1 0 0 0" solref=".003 1" solimp=".999 .999 .001" />
+    <joint name="right_finger_joint_coupling" joint1="right_finger_joint" joint2="left_finger_joint" polycoef="0 -1 0 0 0" solref=".003 1" solimp=".999 .999 .001" />
+    <joint name="upper_parallel_joint_coupling" joint1="upper_parallel_joint" joint2="shoulder_joint" polycoef="0 1 0 0 0" solref=".003 1" solimp=".999 .999 .001" />
+    <joint name="forearm_parallel_joint_coupling" joint1="forearm_parallel_joint" joint2="elbow_joint" polycoef="0 1 0 0 0" solref=".003 1" solimp=".999 .999 .001" />
+  </equality>
+  <actuator>
+    <position name="base" joint="yaw_joint" kp="5" kv=".12" ctrlrange="-0.7853981634 0.7853981634" forcerange="-0.15 0.15" />
+    <position name="shoulder" joint="shoulder_joint" kp="8" kv=".12" ctrlrange="-0.7853981634 0.7853981634" forcerange="-0.15 0.15" />
+    <position name="elbow" joint="elbow_joint" kp="6" kv=".12" ctrlrange="-0.7853981634 0.7853981634" forcerange="-0.15 0.15" />
+    <position name="gripper" joint="left_finger_joint" kp="2" kv=".12" ctrlrange="0 .7" forcerange="-0.15 0.15" />
+  </actuator>
+  <sensor>
+    <framepos name="tcp_position" objtype="site" objname="tcp" />
+  </sensor>
+  <keyframe>
+    <key name="neutral" ctrl="0 0 0 0" />
+  </keyframe>
+</mujoco>

@@ -1,0 +1,27 @@
+{
+  "source": "https://raw.githubusercontent.com/gazebosim/sdformat/sdf14/sdf/1.11/",
+  "scope": "Only native description schema files used by the generated model and world.",
+  "sha256": {
+    "box_shape.sdf": "6d3c86a67156f9303453b3c633c951447e8e3b4e89b4016bdd5be317a89ad658",
+    "collision.sdf": "ebfbd64dabf5f2b686815afa7c677458dc93ed9bc7a8aee68a6acbfabdcbd0e2",
+    "frame.sdf": "087ae6c8e1b244ace200890b653b5fe9c3d6223e687b6bf460225a9d13ff2cb2",
+    "geometry.sdf": "c2712d040008258a28a799bfc767c8238452564fa31eabf25de6a9fd8159f5f4",
+    "inertial.sdf": "7c2897d526f666b97fcf9bc8e2637b77114817c733eda828ecfc57cd852fc0a3",
+    "joint.sdf": "4a79d5104cdee19dec79e21ea4f51077f40c153a460b50bb29ae4a30dd82bbe5",
+    "light.sdf": "f8debdc545a1d2bbc3224fdf07355b4a106ae0cce767be8719d4c4e2ee2c6326",
+    "link.sdf": "ef18d231429f2be719bd6644a173e4d0202f9af7fe17c2ab4c66e20128ac7999",
+    "material.sdf": "700a02ff2a60044aa3fb0613392b775a7008275a69ce7773c31a433d72b35acb",
+    "mesh_shape.sdf": "5ce57445c65f2a178d2dafe3aeddc22e566f84e16c82f79a0ab5b55f59ae5348",
+    "mimic.sdf": "ebdf9837adf1154ab726742d655badab3258002c25ae769fc581b5f1d7be7702",
+    "model.sdf": "e2573ad2636f7da48a25d9e30f8838681a01a5791e8ed311d226aba43ad4de45",
+    "physics.sdf": "b752cf693f78c150fab2bc2105a4a6831b7a4e23a2d22b2d305fa52997b7b99b",
+    "plane_shape.sdf": "9a58f838765a831bd363dab8c33dd5dfdb8abf43e5487b5d4c79bed2ab0b363e",
+    "plugin.sdf": "03836445fc40d5ac01f8ddcd2e340dcae1c7e945898dcc4835da028a4f62e596",
+    "pose.sdf": "e1547ea92de92a50f66f743c1a4e2312edf85115cfb5cb8c99b47b118832974e",
+    "root.sdf": "9b4dc514df81317d5e8c57be0a203e40f6e0c29e54529d3dd341f58f13b0eb53",
+    "scene.sdf": "9bbc4cf205e119038844952744d998df3c29c6efb23ed98b9d624abfac139ca1",
+    "surface.sdf": "3f6b0a92ca0cd455b455b966ef888541ecffb424b81de7171e8cde52f7c2e68d",
+    "visual.sdf": "e93cc29ec101955f463981232dde8048ca7373b2fb85d298d936ec7c55c7d4c4",
+    "world.sdf": "a385d474deda36eb40fd72fe9173ec2e40f451860ac4497e12f99cc57c759c78"
+  }
+}

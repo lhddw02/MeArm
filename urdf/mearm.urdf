@@ -1,0 +1,373 @@
+<?xml version='1.0' encoding='utf-8'?>
+<robot name="mearm_v1">
+  <link name="world" />
+  <link name="base">
+    <inertial>
+      <origin xyz="-0.0303282184 -0.000162375039 0.004575641184" />
+      <mass value="0.0483422763018612" />
+      <inertia ixx="3.8732441625071264e-05" iyy="8.64216964343675e-05" izz="0.00012075658607340269" ixy="7.669307180690146e-08" ixz="-4.469257511231687e-06" iyz="-3.4871850270490834e-08" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/base.stl" />
+      </geometry>
+      <material name="base_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="-0.0304 0 0.0015" rpy="0 0 0" />
+      <geometry>
+        <box size="0.145 0.095 0.003" />
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0 0.0195" rpy="0 0 0" />
+      <geometry>
+        <box size="0.06 0.06 0.003" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="base_fixed" type="fixed">
+    <parent link="world" />
+    <child link="base" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+  </joint>
+  <link name="yaw">
+    <inertial>
+      <origin xyz="-0.0001961493142 -0.0002219664234 0.01189272227" />
+      <mass value="0.03379434339628319" />
+      <inertia ixx="1.5274730450337914e-05" iyy="1.6684566195945514e-05" izz="2.058076962245976e-05" ixy="-2.942370931832446e-07" ixz="3.5893603893148974e-07" iyz="4.868718498761461e-07" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/yaw.stl" />
+      </geometry>
+      <material name="yaw_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.058 0.046 0.004" />
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 0.022 0.02" rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.003 0.038" />
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0 -0.022 0.02" rpy="0 0 0" />
+      <geometry>
+        <box size="0.05 0.003 0.038" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="yaw_joint" type="revolute">
+    <parent link="base" />
+    <child link="yaw" />
+    <origin xyz="0 0 0.026" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="0.15" velocity="2.0" />
+  </joint>
+  <link name="upper">
+    <inertial>
+      <origin xyz="0.04135615562 -0.001831469146 0.0006080224543" />
+      <mass value="0.010103055149092276" />
+      <inertia ixx="9.213655676598473e-07" iyy="5.705152080203725e-06" izz="6.435669156034649e-06" ixy="-1.192426353869282e-07" ixz="5.640259122027479e-09" iyz="5.658359349487189e-09" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/upper.stl" />
+      </geometry>
+      <material name="upper_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.04 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.08 0.028 0.009" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="shoulder_joint" type="revolute">
+    <parent link="yaw" />
+    <child link="upper" />
+    <origin xyz="0.014 0 0.029" rpy="0 -1.570796327 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="0.15" velocity="2.0" />
+  </joint>
+  <link name="elbow_comp">
+    <inertial>
+      <origin xyz="-0.0078290986 -0.01450000024 0.0125784417" />
+      <mass value="0.0019354003796495372" />
+      <inertia ixx="6.217794838711322e-08" iyy="4.31441494653231e-07" izz="3.721666477584626e-07" ixy="-0.0" ixz="4.3593446015565946e-08" iyz="6.100457017578579e-23" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/elbow_comp.stl" />
+      </geometry>
+      <material name="elbow_comp_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="elbow_comp_joint" type="revolute">
+    <parent link="upper" />
+    <child link="elbow_comp" />
+    <origin xyz="0.08 0 0" rpy="0 1.570796327 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="0.15" velocity="2.0" />
+    <mimic joint="shoulder_joint" multiplier="-1" offset="0" />
+  </joint>
+  <link name="forearm">
+    <inertial>
+      <origin xyz="0.02906995428 0.00120218526 0.000484221677" />
+      <mass value="0.005991826769872481" />
+      <inertia ixx="1.010167680068987e-06" iyy="6.131540665030952e-06" izz="7.0680959423365305e-06" ixy="7.308953848978475e-07" ixz="1.4455428444351999e-08" iyz="1.716146193753264e-08" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/forearm.stl" />
+      </geometry>
+      <material name="forearm_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.04 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="0.08 0.03 0.009" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="elbow_joint" type="revolute">
+    <parent link="elbow_comp" />
+    <child link="forearm" />
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="0.15" velocity="2.0" />
+  </joint>
+  <link name="hand">
+    <inertial>
+      <origin xyz="0.01410363637 -0.003545652611 0.002106475509" />
+      <mass value="0.003025837002026127" />
+      <inertia ixx="3.1772275281239337e-07" iyy="5.396545547679892e-07" izz="6.730446781374174e-07" ixy="4.2405787613604846e-08" ixz="-4.874291474947797e-09" iyz="6.439331549898824e-08" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/hand.stl" />
+      </geometry>
+      <material name="hand_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.008 0 0.009" rpy="0 0 0" />
+      <geometry>
+        <box size="0.03 0.025 0.014" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wrist_joint" type="revolute">
+    <parent link="forearm" />
+    <child link="hand" />
+    <origin xyz="0.08 0 0" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="0.15" velocity="2.0" />
+    <mimic joint="elbow_joint" multiplier="-1" offset="0" />
+  </joint>
+  <link name="left_finger">
+    <inertial>
+      <origin xyz="0.009183792337 -0.0007943490379 -0.002367237808" />
+      <mass value="0.0015476227915413678" />
+      <inertia ixx="3.10936511745476e-08" iyy="2.0101850686312865e-07" izz="2.2978971466029934e-07" ixy="2.7651508966849596e-08" ixz="3.165248074012274e-10" iyz="-4.41122371875932e-11" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/left_finger.stl" />
+      </geometry>
+      <material name="left_finger_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.021 -0.007 -0.002" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.003 0.005" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="left_finger_joint" type="revolute">
+    <parent link="hand" />
+    <child link="left_finger" />
+    <origin xyz="0.028 0.009 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="0" upper="0.5" effort="0.15" velocity="2.0" />
+  </joint>
+  <link name="right_finger">
+    <inertial>
+      <origin xyz="0.009155621376 0.0004145596957 -0.002408229175" />
+      <mass value="0.0015173103421311396" />
+      <inertia ixx="3.009970108982464e-08" iyy="2.018129990081572e-07" izz="2.2963659290922214e-07" ixy="-2.4842186505131044e-08" ixz="3.93119509488913e-11" iyz="4.4281975677756765e-11" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/right_finger.stl" />
+      </geometry>
+      <material name="right_finger_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0.021 0.007 -0.002" rpy="0 0 0" />
+      <geometry>
+        <box size="0.025 0.003 0.005" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="right_finger_joint" type="revolute">
+    <parent link="hand" />
+    <child link="right_finger" />
+    <origin xyz="0.028 -0.009 0" rpy="0 0 0" />
+    <axis xyz="0 0 1" />
+    <limit lower="-0.5" upper="0" effort="0.15" velocity="2.0" />
+    <mimic joint="left_finger_joint" multiplier="-1" offset="0" />
+  </joint>
+  <link name="upper_parallel">
+    <inertial>
+      <origin xyz="0.04042682856 -0.004500000238 -0.0002376469719" />
+      <mass value="0.002402846394184476" />
+      <inertia ixx="1.4718122357124315e-08" iyy="1.469994684519481e-06" izz="1.4588808328994002e-06" ixy="-1.2200914035157158e-22" ixz="-4.130661520730077e-13" iyz="-9.53196408996653e-25" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/upper_parallel.stl" />
+      </geometry>
+      <material name="upper_parallel_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="upper_parallel_joint" type="revolute">
+    <parent link="yaw" />
+    <child link="upper_parallel" />
+    <origin xyz="-0.021 -0.019 0.045" rpy="0 -1.570796327 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="0.15" velocity="2.0" />
+    <mimic joint="shoulder_joint" multiplier="1" offset="0" />
+  </joint>
+  <link name="forearm_parallel">
+    <inertial>
+      <origin xyz="0.03942682856 -0.001500000238 -0.0002376469719" />
+      <mass value="0.002402846394184476" />
+      <inertia ixx="1.4718122357124331e-08" iyy="1.4699946845194803e-06" izz="1.4588808328994002e-06" ixy="-0.0" ixz="-4.130661520691949e-13" iyz="-4.765982044983265e-25" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/forearm_parallel.stl" />
+      </geometry>
+      <material name="forearm_parallel_color">
+        <color rgba="0.06 0.48 0.64 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="forearm_parallel_joint" type="revolute">
+    <parent link="elbow_comp" />
+    <child link="forearm_parallel" />
+    <origin xyz="0.012 -0.014 0.018" rpy="0 0 0" />
+    <axis xyz="0 -1 0" />
+    <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="0.15" velocity="2.0" />
+    <mimic joint="elbow_joint" multiplier="1" offset="0" />
+  </joint>
+  <link name="base_servo">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.009" />
+      <inertia ixx="4.0800000000000005e-07" iyy="6.9675e-07" izz="5.047499999999999e-07" ixy="-0.0" ixz="-0.0" iyz="-0.0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/base_servo.stl" />
+      </geometry>
+      <material name="base_servo_color">
+        <color rgba="0.08 0.12 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="base_servo_fixed" type="fixed">
+    <parent link="base" />
+    <child link="base_servo" />
+    <origin xyz="0 0 0.011" rpy="0 0 0" />
+  </joint>
+  <link name="left_servo">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.009" />
+      <inertia ixx="4.709999999999998e-07" iyy="5.047499999999998e-07" izz="7.597499999999997e-07" ixy="-0.0" ixz="-0.0" iyz="-0.0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/left_servo.stl" />
+      </geometry>
+      <material name="left_servo_color">
+        <color rgba="0.08 0.12 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="left_servo_fixed" type="fixed">
+    <parent link="yaw" />
+    <child link="left_servo" />
+    <origin xyz="0.008 0.029 0.029" rpy="0 0 0" />
+  </joint>
+  <link name="right_servo">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.009" />
+      <inertia ixx="4.709999999999998e-07" iyy="5.047499999999998e-07" izz="7.597499999999997e-07" ixy="-0.0" ixz="-0.0" iyz="-0.0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/right_servo.stl" />
+      </geometry>
+      <material name="right_servo_color">
+        <color rgba="0.08 0.12 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="right_servo_fixed" type="fixed">
+    <parent link="yaw" />
+    <child link="right_servo" />
+    <origin xyz="0.008 -0.029 0.029" rpy="0 0 0" />
+  </joint>
+  <link name="gripper_servo">
+    <inertial>
+      <origin xyz="0 0 0" />
+      <mass value="0.009" />
+      <inertia ixx="3.509999999999998e-07" iyy="6.749999999999997e-07" izz="5.399999999999998e-07" ixy="-0.0" ixz="-0.0" iyz="-0.0" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="../models/mearm_v1/meshes/gripper_servo.stl" />
+      </geometry>
+      <material name="gripper_servo_color">
+        <color rgba="0.08 0.12 0.18 1" />
+      </material>
+    </visual>
+  </link>
+  <joint name="gripper_servo_fixed" type="fixed">
+    <parent link="hand" />
+    <child link="gripper_servo" />
+    <origin xyz="0.004 0 0.0065" rpy="0 0 0" />
+  </joint>
+  <link name="tool" />
+  <joint name="tool_joint" type="fixed">
+    <parent link="hand" />
+    <child link="tool" />
+    <origin xyz="0.054 0 0" rpy="0 0 0" />
+  </joint>
+</robot>

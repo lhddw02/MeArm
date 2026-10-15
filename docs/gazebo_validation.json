@@ -1,0 +1,11 @@
+{
+  "links": 14,
+  "joints": 14,
+  "meshes": 14,
+  "collision_proxies": 10,
+  "mimic_constraints": 5,
+  "controllers": 4,
+  "kinematic_samples": 4,
+  "official_schema_files_checked": 21,
+  "gazebo_runtime": "not run: Gazebo is not installed"
+}
