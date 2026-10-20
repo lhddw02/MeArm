@@ -1,0 +1,2 @@
+# Install into the same Conda/virtual environment as MuJoCo.
+pyserial>=3.5,<4

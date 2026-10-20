@@ -39,6 +39,8 @@ limits and contact meshes; add four controllers, passive constraints and servo
 body approximations. The source URDF and STL files remain unmodified in
 `references/community/`.
 
-New Python generators, tests and documentation in this project may be used under
-the MIT license in `LICENSE`. That grant covers only the new code and prose;
+New Python generators, synchronization tools, Arduino sketches, tests and
+documentation in this project may be used under the MIT license in `LICENSE`.
+The sketches depend on the separately installed official Arduino Servo library;
+its implementation is not bundled here. That grant covers only the new code and prose;
 it does not override the third-party hardware and mesh terms above.

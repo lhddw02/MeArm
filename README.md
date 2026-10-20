@@ -15,6 +15,25 @@ inertias, contradictory mimic limits and unsuitable mesh collisions are replaced
 in the generated models. Separate CAD exports extrude the official V1.1 DXF
 contours at 3 mm thickness.
 
+## Simulation results
+
+### Joint motion in MuJoCo
+
+![MeArm base, shoulder, forearm and gripper moving in MuJoCo](docs/motion.gif)
+
+A six-second physics-driven demonstration of the four servo controls and the
+passive linkage that keeps the gripper level.
+
+### Pick and place with colored cubes
+
+![MeArm picking up the red cube and placing it at the target in MuJoCo](docs/pick_place.gif)
+
+The arm grasps a **20 × 20 × 20 mm red cube**, lifts it, transfers it to the
+marked destination, releases it, and retreats. The cube is carried through
+simulated gripper contact and friction. This clip is sped up.
+See the [pick-and-place guide](docs/pick_and_place.md) and
+[recorded simulation results](docs/pick_place_validation.json).
+
 ## Run MuJoCo
 
 Python 3.10+ is recommended. From this directory:
@@ -80,6 +99,34 @@ cube placement, rendering and the two control modes.
 To pick and place, combine a cube color with its destination center in world
 millimeters; on the supplied tabletop use Z=90 mm. See the
 [pick-and-place guide](docs/pick_and_place.md) for the sequence and contact model.
+
+## Synchronize with a real Arduino MeArm
+
+The USB bridge supports **MuJoCo targets driving four real servos** and
+**Arduino local-controller commands driving MuJoCo**. It uses measured per-joint
+pulse calibration, explicit arming, independent firmware speed limits and a
+connection watchdog. Standard three-wire servos provide command telemetry;
+actual joint angles require additional sensors.
+
+Start without hardware:
+
+```sh
+python -m pip install -r requirements-hardware.txt
+python scripts/sync_arduino.py --dry-run
+```
+
+Follow the [complete Windows wiring, calibration and synchronization guide](docs/hardware_sync.md)
+before enabling motors. It explains how to prepare your measured profile and
+upload `arduino/MeArmSync/MeArmSync.ino`. After those steps:
+
+```sh
+python scripts/sync_arduino.py --port COM3 --calibration config/hardware_calibration.json
+```
+
+Replace `COM3` with your board's port. The connection starts disarmed; type
+`arm` only after physically matching the supported arm to your calibrated HOME.
+Then use the viewer sliders or terminal joint/XYZ commands. The supplied example
+calibration deliberately cannot arm real hardware.
 
 ## Run Gazebo
 

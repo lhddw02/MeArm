@@ -3,8 +3,8 @@ from pathlib import Path
 import hashlib, zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
-FOLDERS=('cad','config','docs','examples','gazebo','models','mujoco','references','scripts','tests','urdf')
-TOP=('README.md','LICENSE','THIRD_PARTY.md','requirements.txt','.gitignore','start_mujoco.ps1')
+FOLDERS=('arduino','cad','config','docs','examples','gazebo','models','mujoco','references','scripts','tests','urdf')
+TOP=('README.md','LICENSE','THIRD_PARTY.md','requirements.txt','requirements-hardware.txt','.gitignore','start_mujoco.ps1')
 
 def digest(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 

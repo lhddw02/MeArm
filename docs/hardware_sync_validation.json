@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-16",
+  "python": "3.10.22",
+  "platform": "Windows-10-10.0.26100-SP0",
+  "unittest_count": 58,
+  "unittest_passed": true,
+  "headless_dry_runs": [
+    {
+      "direction": "sim-to-hardware",
+      "scene": "arm",
+      "passed": true
+    },
+    {
+      "direction": "hardware-to-sim",
+      "scene": "cubes",
+      "passed": true
+    }
+  ],
+  "firmware_builds": {
+    "date": "2026-10-16",
+    "verification": "compile_only",
+    "hardware_opened": false,
+    "firmware_uploaded": false,
+    "tools": {
+      "arduino_cli": "1.5.2-rc.1 (fef6e48df, 2026-07-23)",
+      "arduino_avr_core": "1.8.8",
+      "avr_gcc": "7.3.0-atmel3.6.1-arduino7",
+      "servo_library": "1.3.0"
+    },
+    "builds": [
+      {
+        "sketch": "MeArmSync/MeArmSync.ino",
+        "variant": "HOST, supplied uncommissioned profile",
+        "fqbn": "arduino:avr:uno",
+        "passed": true,
+        "flash_bytes": 7748,
+        "sram_bytes": 701
+      },
+      {
+        "sketch": "MeArmSync/MeArmSync.ino",
+        "variant": "HOST, temporary test copy with calibrated flag true",
+        "fqbn": "arduino:avr:uno",
+        "passed": true,
+        "flash_bytes": 8952,
+        "sram_bytes": 733
+      },
+      {
+        "sketch": "MeArmSync/MeArmSync.ino",
+        "variant": "LOCAL joystick example, temporary test copy with calibrated flag true",
+        "fqbn": "arduino:avr:nano:cpu=atmega328old",
+        "build_flags": "-DMEARM_SOURCE_LOCAL=true -DMEARM_LOCAL_JOYSTICKS",
+        "passed": true,
+        "flash_bytes": 9354,
+        "sram_bytes": 715
+      },
+      {
+        "sketch": "ServoCommissioning/ServoCommissioning.ino",
+        "variant": "single servo",
+        "fqbn": "arduino:avr:uno",
+        "passed": true,
+        "flash_bytes": 5896,
+        "sram_bytes": 584
+      }
+    ],
+    "warnings": "Only upstream Arduino core new.cpp unused-parameter warnings with --warnings all; no sketch warnings.",
+    "limitations": "No on-device execution, electrical measurement, physical angle measurement, or real arm motion was performed. Pulse telemetry is applied command state, not shaft feedback."
+  },
+  "hardware_opened": false,
+  "physical_calibration_performed": false,
+  "hardware_feedback": "applied_servo_pulse_commands_only",
+  "sha256": {
+    "scripts/arduino_sync.py": "b5c769fb57f5483cde34ee0eabfe8834ba696e0726af75ce87f49cb62a82fd01",
+    "scripts/sync_arduino.py": "b887608f73fd1276b16298bb984259c552d97a8d4ded22ade336e4cffa12dd2c",
+    "scripts/hardware_calibration.py": "1360dea62e9145b57c64a195c3d9e3e6a9ad1cfc979a585f36647a16e1596df1",
+    "scripts/calibrate_hardware.py": "17a22b2fd237a508e8af7039d1e4f9ef9ee99c3f8db4885281708bc14a2e1b97",
+    "arduino/MeArmSync/MeArmSync.ino": "6e236a9cd7afd229d149320cbfcda2541b08babf408f7ad7c66b3cae6e6c3a35",
+    "arduino/MeArmSync/calibration.h": "4309b7693c7b12c48a0305bd2ec387b61ba35e67d5a0319d47e40a130cfae796",
+    "arduino/MeArmSync/local_joystick.example.h": "f3a0b34d9365d1b0b312c1314336f0d240ba9b2ef07e2578c4a41a7096485bb6",
+    "arduino/ServoCommissioning/ServoCommissioning.ino": "16dd188011ce089384d2667b16853774993d0678caeea94bfe5e4401a4e59e7c"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "calibrated": false,
+  "baudrate": 115200,
+  "watchdog_ms": 500,
+  "joints": [
+    {
+      "name": "yaw",
+      "pin": 11,
+      "model_deg": [-5, 0, 5],
+      "pulse_us": [1448, 1500, 1552],
+      "home_deg": 0,
+      "max_us_per_second": 250
+    },
+    {
+      "name": "shoulder",
+      "pin": 10,
+      "model_deg": [85, 90, 95],
+      "pulse_us": [1321, 1266, 1211],
+      "home_deg": 90,
+      "max_us_per_second": 250
+    },
+    {
+      "name": "forearm",
+      "pin": 9,
+      "model_deg": [-5, 0, 5],
+      "pulse_us": [1410, 1472, 1534],
+      "home_deg": 0,
+      "max_us_per_second": 250
+    },
+    {
+      "name": "grip",
+      "pin": 6,
+      "model_deg": [0, 10, 20],
+      "pulse_us": [2000, 1850, 1700],
+      "home_deg": 10,
+      "max_us_per_second": 250
+    }
+  ]
+}
