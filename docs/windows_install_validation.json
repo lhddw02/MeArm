@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-06",
+  "scope": "Fresh isolated package environment on the existing Windows computer; not an OS reinstall",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "architecture": "AMD64",
+  "python": "3.12.14",
+  "environment": "tmp/install-check-venv",
+  "system_site_packages": false,
+  "installed_from": "requirements-viser.txt",
+  "versions": {
+    "mujoco": "3.17.0",
+    "viser": "1.1.1",
+    "numpy": "2.5.4",
+    "trimesh": "5.2.0",
+    "pillow": "13.0.0",
+    "websockets": "16.1.1"
+  },
+  "checks": {
+    "pip_check": true,
+    "headless_mujoco_2_seconds": true,
+    "unittest_passed": true,
+    "unittest_count": 71,
+    "viser_http_websocket_passed": true,
+    "physical_pick_place_colors": [
+      "red",
+      "green",
+      "blue",
+      "yellow"
+    ],
+    "original_venv_or_conda_packages_required": false,
+    "project_deps_directory_required": false
+  },
+  "limitations": [
+    "No fresh Windows OS installation performed",
+    "Browser raster/GPU behavior on another machine requires a local check",
+    "Gazebo/WSL runtime not tested"
+  ]
+}

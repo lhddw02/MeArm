@@ -1,4 +1,4 @@
-"""Exercise the real local HTTP/WebSocket server without browser automation.
+r"""Exercise the real local HTTP/WebSocket server without browser automation.
 
 Run explicitly: .venv\Scripts\python.exe tests/validate_viser.py
 Requires local socket access. Does not open hardware ports or control a browser.

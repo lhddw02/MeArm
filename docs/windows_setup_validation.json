@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-06",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.12.14",
+  "environment": "tmp/windows setup check",
+  "fresh_environment_created": true,
+  "path_with_spaces_tested": true,
+  "dependencies_installed": [
+    "requirements-viser.txt",
+    "requirements-hardware.txt"
+  ],
+  "versions": {
+    "mujoco": "3.17.0",
+    "viser": "1.1.1",
+    "numpy": "2.5.4",
+    "pyserial": "3.5"
+  },
+  "checks": {
+    "setup_only_passed": true,
+    "pip_check_passed": true,
+    "headless_model_check_passed": true,
+    "launch_from_other_directory_passed": true,
+    "skip_install_reuse_passed": true,
+    "colored_cubes_and_pick_controls_initialized": true,
+    "scene_arguments_forwarded": true,
+    "broken_environment_exit_code": 1,
+    "existing_files_preserved": true,
+    "unit_tests_passed": 75
+  },
+  "browser_opened_during_test": false,
+  "limitations": "The launch test used --no-browser; browser raster output and the OS default-browser association were not verified.",
+  "launch_report": {
+    "scene": "classroom",
+    "scene_name": "Classroom",
+    "physics": "MuJoCo 3.17.0",
+    "task": "cubes",
+    "simulation_seconds": 0.3750000000000003,
+    "target_degrees": [
+      0.0,
+      90.0,
+      0.0,
+      0.0
+    ],
+    "tcp_mm": [
+      147.99921883203257,
+      5.365051495765075e-06,
+      134.80588223042545
+    ],
+    "pick_place": {
+      "status": "idle",
+      "phase": "idle",
+      "active": false,
+      "color": null,
+      "error": "",
+      "grasp_mode": "contact",
+      "destination_mm": null,
+      "cube_position_mm": null,
+      "placement_error_mm": null,
+      "released": false,
+      "history": []
+    },
+    "visual_nodes": 34,
+    "warnings": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+}

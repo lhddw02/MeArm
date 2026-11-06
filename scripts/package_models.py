@@ -4,7 +4,7 @@ import hashlib, zipfile
 
 ROOT=Path(__file__).resolve().parents[1]
 FOLDERS=('arduino','cad','config','docs','examples','gazebo','models','mujoco','references','scenes','scripts','tests','urdf')
-TOP=('README.md','LICENSE','THIRD_PARTY.md','requirements.txt','requirements-hardware.txt','requirements-viser.txt','.gitignore','start_mujoco.ps1')
+TOP=('README.md','install.md','LICENSE','THIRD_PARTY.md','requirements.txt','requirements-hardware.txt','requirements-viser.txt','.gitignore','start_mujoco.ps1','setup_windows.cmd')
 
 def digest(path): return hashlib.sha256(path.read_bytes()).hexdigest()
 

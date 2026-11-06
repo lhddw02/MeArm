@@ -19,12 +19,13 @@ here targets MuJoCo and Viser.
 
 ## Windows environment
 
-The project-local `.venv` is prepared with Viser 1.1.1 and uses the existing
-`mearm` Conda environment's MuJoCo dependencies. No PowerShell activation or
-execution-policy change is required:
+Create a project-local `.venv` and install its dependencies using the
+[fresh Windows installation guide](../install.md). The environment directory is
+not included in a source checkout or model bundle. No PowerShell activation or
+execution-policy change is required for the direct commands below:
 
 ```powershell
-cd C:\Users\Luka\Documents\ChatGPT\MeArm
+cd "$env:USERPROFILE\Documents\MeArm"
 .\.venv\Scripts\python.exe scripts/run_mujoco.py
 .\.venv\Scripts\python.exe scripts/run_viser.py
 ```

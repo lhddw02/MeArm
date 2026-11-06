@@ -24,7 +24,7 @@
   "last_scene": {
     "scene": "empty",
     "scene_name": "Empty",
-    "physics": "MuJoCo 3.16.0",
+    "physics": "MuJoCo 3.17.0",
     "task": "cubes",
     "simulation_seconds": 21.200000000002927,
     "target_degrees": [
@@ -114,9 +114,5 @@
       0,
       0
     ]
-  },
-  "unit_tests": {
-    "passed": true,
-    "count": 71
   }
 }

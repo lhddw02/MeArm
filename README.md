@@ -5,6 +5,16 @@ Four independent controls operate base yaw, shoulder elevation, forearm elevatio
 and the gripper. Passive constraints reproduce the ideal parallelogram behavior
 that keeps the hand level.
 
+**New Windows computer? Start with [install.md](install.md)** to install Python,
+create your own `.venv`, and run Viser. It also covers MuJoCo, Gazebo/WSL,
+scene imports and troubleshooting. Virtual environments are not included in the download.
+
+After installing 64-bit Python, double-click **[setup_windows.cmd](setup_windows.cmd)**
+or run `.\setup_windows.cmd` from PowerShell. It creates/reuses `.venv`, installs
+the Python dependencies, and opens Viser with colored cubes and pick-and-place
+controls. No environment activation is needed. Use `--scene classroom` to choose
+a background, or `--skip-install` for later launches without reinstalling packages.
+
 ![MeArm model rendered in MuJoCo](docs/preview.png)
 
 The assembly uses the mesh placements from
@@ -42,7 +52,7 @@ support floor. Both accept the same `--scene` option: `empty`, `workshop`,
 backdrop. Viser displays MuJoCo physics in a browser with joint sliders,
 XYZ targets and live scene selection.
 
-The prepared Windows project environment runs both viewers directly:
+After creating the Windows environment using [install.md](install.md), run:
 
 ```powershell
 .\.venv\Scripts\python.exe scripts/run_mujoco.py
@@ -57,8 +67,8 @@ For another scene:
 .\.venv\Scripts\python.exe scripts/run_viser.py --scene scenes/imported_room.json
 ```
 
-On a fresh installation, install `requirements-viser.txt` into your Python
-environment. See the [scene import and Viser guide](docs/scene_environments.md)
+The fresh-install guide includes the commands to install `requirements-viser.txt`
+into your local environment. See the [scene import and Viser guide](docs/scene_environments.md)
 for setup, image backgrounds, unit conversion, placement, collision proxies
 and custom layouts. Imported backgrounds are visual-only by default.
 

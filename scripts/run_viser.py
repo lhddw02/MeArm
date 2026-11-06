@@ -407,6 +407,7 @@ def main(argv=None):
     parser.add_argument("--port", type=int, default=8080)
     parser.add_argument("--task", choices=("arm", "cubes"), default="arm", help="Cubes/platform are opt-in")
     parser.add_argument("--demo", action="store_true")
+    parser.add_argument("--open-browser", action="store_true", help="Open the actual local server URL in your default browser")
     parser.add_argument("--cube", choices=[cube['name'] for cube in CUBES], help="Start an automatic pick; requires --task cubes --place-mm X Y Z")
     parser.add_argument("--place-mm", type=float, nargs=3, metavar=("X", "Y", "Z"), help="Destination cube CENTER in world mm; tabletop Z=90")
     parser.add_argument("--move-seconds", type=float, default=2., help="Pick/place motion segment duration")
@@ -448,6 +449,14 @@ def main(argv=None):
 
         print(f"MeArm Viser: http://{args.host}:{server.get_port()}", flush=True)
         print(f"Scene: {app.environment.name}; physics: MuJoCo; Ctrl+C stops the server.", flush=True)
+        if args.open_browser:
+            import webbrowser
+            browser_host = "127.0.0.1" if args.host in ("0.0.0.0", "::") else args.host
+            try:
+                if not webbrowser.open_new_tab(f"http://{browser_host}:{server.get_port()}"):
+                    print("Open the printed URL manually if no browser tab appeared.", flush=True)
+            except (OSError, webbrowser.Error) as exc:
+                print(f"Could not open a browser ({exc}); open the printed URL manually.", flush=True)
         started = time.monotonic()
         previous = started
         accumulator = 0.
