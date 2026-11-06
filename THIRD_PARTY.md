@@ -44,3 +44,8 @@ documentation in this project may be used under the MIT license in `LICENSE`.
 The sketches depend on the separately installed official Arduino Servo library;
 its implementation is not bundled here. That grant covers only the new code and prose;
 it does not override the third-party hardware and mesh terms above.
+
+The built-in scene layouts and `scenes/assets/demo_room.glb` are original,
+procedurally generated project assets covered by the MIT license. The GLB can
+be regenerated with `scripts/create_scene_examples.py`; it contains no external
+room models or photographic assets.

@@ -92,8 +92,8 @@ def build_mjcf(spec):
     vis=ET.SubElement(root,'visual'); ET.SubElement(vis,'global',offwidth='1440',offheight='1080',azimuth='135',elevation='-25')
     ET.SubElement(vis,'headlight',ambient='.4 .4 .4',diffuse='.7 .7 .7',specular='.2 .2 .2')
     asset=ET.SubElement(root,'asset')
-    ET.SubElement(asset,'texture',name='grid',type='2d',builtin='checker',rgb1='.85 .88 .90',rgb2='.75 .80 .83',width='256',height='256')
-    ET.SubElement(asset,'material',name='floor_mat',texture='grid',texrepeat='5 5',reflectance='.04')
+    ET.SubElement(asset,'texture',name='environment_sky',type='skybox',builtin='flat',rgb1='.92 .94 .96',rgb2='.92 .94 .96',width='16',height='16')
+    ET.SubElement(asset,'material',name='floor_mat',rgba='.88 .90 .92 1',reflectance='.04')
     world=ET.SubElement(root,'worldbody'); ET.SubElement(world,'light',pos='0 -.2 .5',dir='0 0 -1',diffuse='.8 .8 .8')
     ET.SubElement(world,'geom',name='floor',type='plane',size='.5 .5 .01',material='floor_mat',contype='1',conaffinity='3')
     bodies={}

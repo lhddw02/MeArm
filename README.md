@@ -1,6 +1,6 @@
 # MeArm Classic V1 simulation models
 
-An assembled, articulated MeArm for **MuJoCo**, **Gazebo Sim**, and ROS visualization.
+An assembled, articulated MeArm for **MuJoCo**, **Viser**, **Gazebo Sim**, and ROS visualization.
 Four independent controls operate base yaw, shoulder elevation, forearm elevation,
 and the gripper. Passive constraints reproduce the ideal parallelogram behavior
 that keeps the hand level.
@@ -33,6 +33,52 @@ marked destination, releases it, and retreats. The cube is carried through
 simulated gripper contact and friction. This clip is sped up.
 See the [pick-and-place guide](docs/pick_and_place.md) and
 [recorded simulation results](docs/pick_place_validation.json).
+
+## Scene backgrounds and Viser
+
+MuJoCo and Viser default to an **empty environment** with the arm and a plain
+support floor. Both accept the same `--scene` option: `empty`, `workshop`,
+`classroom`, a custom scene JSON, a GLB/GLTF/OBJ/STL/PLY model, or a PNG/JPG
+backdrop. Viser displays MuJoCo physics in a browser with joint sliders,
+XYZ targets and live scene selection.
+
+The prepared Windows project environment runs both viewers directly:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/run_mujoco.py
+.\.venv\Scripts\python.exe scripts/run_viser.py
+```
+
+Open the Viser URL printed in the terminal, normally **http://127.0.0.1:8080**.
+For another scene:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/run_mujoco.py --scene scenes/imported_room.json
+.\.venv\Scripts\python.exe scripts/run_viser.py --scene scenes/imported_room.json
+```
+
+On a fresh installation, install `requirements-viser.txt` into your Python
+environment. See the [scene import and Viser guide](docs/scene_environments.md)
+for setup, image backgrounds, unit conversion, placement, collision proxies
+and custom layouts. Imported backgrounds are visual-only by default.
+
+For the same four-color, physical pick-and-place task in Viser:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/run_viser.py --task cubes
+```
+
+Open **Pick and place**, select red/green/blue/yellow, enter the destination cube
+center in millimetres (tabletop Z=90), and click **Pick and place selected cube**.
+Progress, cancellation and a green destination marker are included. To start a
+red-cube job directly:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/run_viser.py --task cubes --cube red --place-mm 180 -45 90
+```
+
+Add `--scene workshop` or another scene path to either command. The background
+stays empty when no scene is specified.
 
 ## Run MuJoCo
 

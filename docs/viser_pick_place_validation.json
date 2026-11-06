@@ -1,0 +1,297 @@
+{
+  "date": "2026-11-06",
+  "viser_version": "1.1.1",
+  "method": "real Viser GUI events over WebSocket, MuJoCo pad contacts and friction, no pose edits or attachments",
+  "passed": true,
+  "results": {
+    "red": {
+      "status": "complete",
+      "phase": "complete",
+      "active": false,
+      "color": "red",
+      "error": "",
+      "grasp_mode": "contact",
+      "destination_mm": [
+        180.0,
+        -45.0,
+        90.0
+      ],
+      "cube_position_mm": [
+        181.03303853575227,
+        -45.270475523263386,
+        89.92531448022042
+      ],
+      "placement_error_mm": 1.0704688467669385,
+      "released": true,
+      "history": [
+        {
+          "phase": "open",
+          "time": 0.0
+        },
+        {
+          "phase": "approach",
+          "time": 1.0000000000000007
+        },
+        {
+          "phase": "descend",
+          "time": 2.9999999999997806
+        },
+        {
+          "phase": "close",
+          "time": 5.000000000000004
+        },
+        {
+          "phase": "lift",
+          "time": 7.350000000000789
+        },
+        {
+          "phase": "transfer",
+          "time": 10.350999999999702
+        },
+        {
+          "phase": "lower",
+          "time": 13.35199999999804
+        },
+        {
+          "phase": "release",
+          "time": 16.352999999997003
+        },
+        {
+          "phase": "retreat",
+          "time": 18.602999999999753
+        },
+        {
+          "phase": "settle",
+          "time": 20.603000000002197
+        },
+        {
+          "phase": "complete",
+          "time": 21.10400000000281
+        }
+      ],
+      "peak_cube_height_mm": 128.34321685357705,
+      "rendered_cube_center_mm": [
+        181.03303086118106,
+        -45.27047413120312,
+        89.92499424349816
+      ]
+    },
+    "green": {
+      "status": "complete",
+      "phase": "complete",
+      "active": false,
+      "color": "green",
+      "error": "",
+      "grasp_mode": "contact",
+      "destination_mm": [
+        180.0,
+        -45.0,
+        90.0
+      ],
+      "cube_position_mm": [
+        179.77583411390682,
+        -45.03706809253831,
+        89.92531448022045
+      ],
+      "placement_error_mm": 0.23917005422315882,
+      "released": true,
+      "history": [
+        {
+          "phase": "open",
+          "time": 0.0
+        },
+        {
+          "phase": "approach",
+          "time": 1.0000000000000007
+        },
+        {
+          "phase": "descend",
+          "time": 2.9999999999997806
+        },
+        {
+          "phase": "close",
+          "time": 5.000000000000004
+        },
+        {
+          "phase": "lift",
+          "time": 7.350000000000789
+        },
+        {
+          "phase": "transfer",
+          "time": 10.350999999999702
+        },
+        {
+          "phase": "lower",
+          "time": 13.35199999999804
+        },
+        {
+          "phase": "release",
+          "time": 16.352999999997003
+        },
+        {
+          "phase": "retreat",
+          "time": 18.602999999999753
+        },
+        {
+          "phase": "settle",
+          "time": 20.603000000002197
+        },
+        {
+          "phase": "complete",
+          "time": 21.10400000000281
+        }
+      ],
+      "peak_cube_height_mm": 124.61507828348479,
+      "rendered_cube_center_mm": [
+        179.77577085505268,
+        -45.03705152117839,
+        89.92511190555007
+      ]
+    },
+    "blue": {
+      "status": "complete",
+      "phase": "complete",
+      "active": false,
+      "color": "blue",
+      "error": "",
+      "grasp_mode": "contact",
+      "destination_mm": [
+        180.0,
+        -45.0,
+        90.0
+      ],
+      "cube_position_mm": [
+        181.12745846303326,
+        -45.270644958403665,
+        89.92531448022044
+      ],
+      "placement_error_mm": 1.1618903589579332,
+      "released": true,
+      "history": [
+        {
+          "phase": "open",
+          "time": 0.0
+        },
+        {
+          "phase": "approach",
+          "time": 1.0000000000000007
+        },
+        {
+          "phase": "descend",
+          "time": 2.9999999999997806
+        },
+        {
+          "phase": "close",
+          "time": 5.000000000000004
+        },
+        {
+          "phase": "lift",
+          "time": 7.350000000000789
+        },
+        {
+          "phase": "transfer",
+          "time": 10.350999999999702
+        },
+        {
+          "phase": "lower",
+          "time": 13.35199999999804
+        },
+        {
+          "phase": "release",
+          "time": 16.352999999997003
+        },
+        {
+          "phase": "retreat",
+          "time": 18.602999999999753
+        },
+        {
+          "phase": "settle",
+          "time": 20.603000000002197
+        },
+        {
+          "phase": "complete",
+          "time": 21.10400000000281
+        }
+      ],
+      "peak_cube_height_mm": 128.38044806487648,
+      "rendered_cube_center_mm": [
+        181.12736625944197,
+        -45.27062202672173,
+        89.92506453789262
+      ]
+    },
+    "yellow": {
+      "status": "complete",
+      "phase": "complete",
+      "active": false,
+      "color": "yellow",
+      "error": "",
+      "grasp_mode": "contact",
+      "destination_mm": [
+        180.0,
+        -45.0,
+        90.0
+      ],
+      "cube_position_mm": [
+        180.54484591849268,
+        -45.12533210915084,
+        89.92531448022045
+      ],
+      "placement_error_mm": 0.564041788653177,
+      "released": true,
+      "history": [
+        {
+          "phase": "open",
+          "time": 0.0
+        },
+        {
+          "phase": "approach",
+          "time": 1.0000000000000007
+        },
+        {
+          "phase": "descend",
+          "time": 2.9999999999997806
+        },
+        {
+          "phase": "close",
+          "time": 5.000000000000004
+        },
+        {
+          "phase": "lift",
+          "time": 7.350000000000789
+        },
+        {
+          "phase": "transfer",
+          "time": 10.350999999999702
+        },
+        {
+          "phase": "lower",
+          "time": 13.35199999999804
+        },
+        {
+          "phase": "release",
+          "time": 16.352999999997003
+        },
+        {
+          "phase": "retreat",
+          "time": 18.602999999999753
+        },
+        {
+          "phase": "settle",
+          "time": 20.603000000002197
+        },
+        {
+          "phase": "complete",
+          "time": 21.10400000000281
+        }
+      ],
+      "peak_cube_height_mm": 124.46407708569845,
+      "rendered_cube_center_mm": [
+        180.5447852928428,
+        -45.125314961401095,
+        89.92503451528991
+      ]
+    }
+  },
+  "browser_raster_verified": false
+}

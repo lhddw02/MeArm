@@ -6,6 +6,7 @@ from _runtime import configure_dependencies
 configure_dependencies(ROOT)
 import mujoco
 import numpy as np
+from scene_environment import add_scene_arguments, load_environment, scene_kwargs
 
 
 def demo_control(t):
@@ -14,6 +15,7 @@ def demo_control(t):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
+    add_scene_arguments(parser)
     parser.add_argument('--headless',action='store_true')
     parser.add_argument('--demo',action='store_true')
     parser.add_argument('--seconds',type=float,default=10)
@@ -32,7 +34,20 @@ def main():
         parser.error('--gif renders the demo; use --render for a specified pose')
     if not math.isfinite(args.seconds) or args.seconds<0:
         parser.error('--seconds must be finite and nonnegative')
-    m=mujoco.MjModel.from_xml_path(str(ROOT/'mujoco/mearm.xml')); d=mujoco.MjData(m)
+    try:
+        m,d,environment=load_environment(args.scene,**scene_kwargs(args))
+    except (ValueError,OSError) as exc:
+        parser.error(str(exc))
+    print('Scene:',environment.name)
+    def scene_camera(distance):
+        cam=mujoco.MjvCamera()
+        cam.lookat[:]=[.035,0,.07]
+        cam.distance=distance; cam.azimuth=125; cam.elevation=-22
+        if environment.definition['objects']:
+            cam.lookat[:]=[.12,0,.15]
+            cam.distance=.85
+            cam.azimuth=45
+        return cam
     from arm_control import MeArmController
     from terminal_control import print_status
     arm=MeArmController(m,d)
@@ -46,7 +61,7 @@ def main():
     mujoco.mj_forward(m,d)
     if args.gif:
         from PIL import Image
-        cam=mujoco.MjvCamera(); cam.lookat[:]=[.035,0,.07]; cam.distance=.42; cam.azimuth=125; cam.elevation=-22
+        cam=scene_camera(.42)
         opt=mujoco.MjvOption(); opt.geomgroup[3:]=0
         frames=[]
         with mujoco.Renderer(m,height=480,width=640) as renderer:
@@ -73,7 +88,7 @@ def main():
             if j['mimic']: values[j['name']]=values[j['mimic']['joint']]*j['mimic']['multiplier']
             d.qpos[m.joint(j['name']).qposadr[0]]=values[j['name']]
         mujoco.mj_forward(m,d)
-        cam=mujoco.MjvCamera(); cam.lookat[:]=[.035,0,.07]; cam.distance=.39; cam.azimuth=125; cam.elevation=-22
+        cam=scene_camera(.39)
         opt=mujoco.MjvOption(); opt.geomgroup[3:]=0
         with mujoco.Renderer(m,height=1080,width=1440) as renderer:
             renderer.update_scene(d,cam,scene_option=opt)
@@ -107,6 +122,12 @@ def main():
     if args.interactive: print('mearm> ',end='',flush=True)
     with mjviewer.launch_passive(m,d,show_right_ui=True) as viewer:
         viewer.opt.geomgroup[3:]=0
+        cam=scene_camera(.42)
+        with viewer.lock():
+            viewer.cam.lookat[:]=cam.lookat
+            viewer.cam.distance=cam.distance
+            viewer.cam.azimuth=cam.azimuth
+            viewer.cam.elevation=cam.elevation
         while viewer.is_running():
             start=time.perf_counter()
             if args.interactive:

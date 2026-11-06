@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "name": "Imported GLB workshop",
+  "background_rgb": [0.86, 0.90, 0.94],
+  "floor_rgba": [0.66, 0.69, 0.71, 1],
+  "objects": [
+    {
+      "name": "room",
+      "type": "mesh",
+      "file": "assets/demo_room.glb",
+      "scale": 1,
+      "pos_m": [0, 0, 0],
+      "rpy_deg": [0, 0, 0],
+      "collidable": false
+    }
+  ]
+}

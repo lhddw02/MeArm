@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "name": "Empty",
+  "background_rgb": [0.92, 0.94, 0.96],
+  "floor_rgba": [0.88, 0.90, 0.92, 1],
+  "objects": []
+}

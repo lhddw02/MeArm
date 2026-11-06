@@ -124,11 +124,14 @@ def build_scene_xml(target_mm=None,*,grasp_ready=False):
     return ET.tostring(scene, encoding="unicode", xml_declaration=True) + "\n"
 
 
-def load_scene(target_mm=None,*,grasp_ready=False):
+def load_scene(target_mm=None,*,grasp_ready=False,background="empty",environment_options=None):
     """Compile the cube scene and return a model plus fresh, forwarded data."""
-    model = mujoco.MjModel.from_xml_string(build_scene_xml(target_mm,grasp_ready=grasp_ready))
-    data = mujoco.MjData(model)
-    mujoco.mj_forward(model, data)
+    if __package__:
+        from .scene_environment import load_environment
+    else:
+        from scene_environment import load_environment
+    model,data,_ = load_environment(background,base_xml=build_scene_xml(target_mm,grasp_ready=grasp_ready),
+                                     **(environment_options or {}))
     return model, data
 
 

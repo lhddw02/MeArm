@@ -18,65 +18,8 @@ import numpy as np
 from arm_control import MeArmController
 from cube_scene import CUBES, CUBE_SIZE_M, load_scene
 from pick_place import PickPlaceTask
-
-
-class CubeSceneController:
-    """Two control modes sharing the same four real position actuators."""
-    def __init__(self,model,data):
-        self.model,self.data=model,data
-        self.arm=MeArmController(model,data)
-        self.mode='manual'
-        self.target_mm=None
-        self._start=None
-        self._goal=None
-        self._start_time=0.0
-        self._move_seconds=2.0
-        self._target_site=int(model.site('reach_target').id)
-        self.model.site_rgba[self._target_site,3]=0
-
-    def set_manual(self):
-        """Stop automatic writes; native Control sliders own the servo targets."""
-        self.mode='manual'
-        self.model.site_rgba[self._target_site,3]=0
-
-    def set_auto(self,target_mm,move_seconds=2.0,grip_deg=None):
-        """Validate first, then blend from current servo commands to an IK pose."""
-        duration=float(move_seconds)
-        if not math.isfinite(duration) or duration<=0:
-            raise ValueError('Move duration must be finite and greater than zero.')
-        target=np.asarray(target_mm,dtype=float)
-        if target.shape!=(3,) or not np.all(np.isfinite(target)):
-            raise ValueError('Target must be three finite world coordinates in millimeters.')
-        start=self.arm.target
-        # The existing IK helper commits valid controls. Restore immediately so
-        # actual motion follows the timed trajectory rather than a target jump.
-        try:
-            goal=self.arm.move_to(*target,grip_deg=grip_deg)
-        finally:
-            self.data.ctrl[self.arm.actuator_ids]=start
-        self._start=start
-        self._goal=goal
-        self._start_time=float(self.data.time)
-        self._move_seconds=duration
-        self.target_mm=target.copy()
-        self.model.site_pos[self._target_site]=target/1000
-        self.model.site_rgba[self._target_site,3]=.65
-        self.mode='auto'
-
-    @property
-    def finished(self):
-        return self.mode=='auto' and self.data.time-self._start_time>=self._move_seconds-1e-12
-
-    @property
-    def error_mm(self):
-        if self.mode!='auto' or self.target_mm is None: return math.inf
-        return float(np.linalg.norm(self.arm.tcp_position_mm-self.target_mm))
-
-    def update(self):
-        if self.mode!='auto': return
-        t=float(np.clip((self.data.time-self._start_time)/self._move_seconds,0,1))
-        blend=t*t*t*(10+t*(-15+6*t))
-        self.data.ctrl[self.arm.actuator_ids]=self._start+blend*(self._goal-self._start)
+from scene_environment import add_scene_arguments, scene_kwargs
+from cube_control import CubeSceneController
 
 
 def cube_target_mm(model,data,name,hover_mm=30.0):
@@ -176,6 +119,7 @@ def render_scene(model,data,path):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
+    add_scene_arguments(parser)
     parser.add_argument('--mode',choices=('manual','auto'),default='manual')
     parser.add_argument('--target-mm',type=float,nargs=3,metavar=('X','Y','Z'),help='Tool reach target, or destination cube CENTER when combined with --cube (world mm)')
     parser.add_argument('--cube',choices=[cube['name'] for cube in CUBES],help='Select a cube; combine with --target-mm or --place-mm to pick and place')
@@ -213,7 +157,10 @@ def main():
         parser.error('Pick-and-place controls jaw opening automatically; omit --grip-deg')
     if args.interactive and (args.headless or args.render):
         parser.error('--interactive requires the live viewer')
-    model,data=load_scene(grasp_ready=True)
+    try:
+        model,data=load_scene(grasp_ready=True,background=args.scene,environment_options=scene_kwargs(args))
+    except (ValueError,OSError) as exc:
+        parser.error(str(exc))
     controller=CubeSceneController(model,data)
     task=PickPlaceTask(controller)
     try:

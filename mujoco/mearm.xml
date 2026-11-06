@@ -8,8 +8,8 @@
     <headlight ambient=".4 .4 .4" diffuse=".7 .7 .7" specular=".2 .2 .2" />
   </visual>
   <asset>
-    <texture name="grid" type="2d" builtin="checker" rgb1=".85 .88 .90" rgb2=".75 .80 .83" width="256" height="256" />
-    <material name="floor_mat" texture="grid" texrepeat="5 5" reflectance=".04" />
+    <texture name="environment_sky" type="skybox" builtin="flat" rgb1=".92 .94 .96" rgb2=".92 .94 .96" width="16" height="16" />
+    <material name="floor_mat" rgba=".88 .90 .92 1" reflectance=".04" />
     <mesh name="base_mesh" file="base.stl" />
     <mesh name="yaw_mesh" file="yaw.stl" />
     <mesh name="upper_mesh" file="upper.stl" />
