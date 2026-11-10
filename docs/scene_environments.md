@@ -59,6 +59,8 @@ Use the same `--scene` value in either viewer:
 | `empty` or no option | Plain default environment |
 | `workshop` | Small workshop backdrop with cabinet and shelf |
 | `classroom` | Classroom-style wall, board and desk |
+| `demo_classroom` | Reconstructed table, Rubik's cube, bottle and can, with native collisions |
+| `scenes/demo_classroom/scene.xml` | Same reconstructed scene loaded directly as MJCF |
 | `scenes/imported_room.json` | Included GLB room-import example |
 | `C:/assets/room.glb` | Your own 3D scene |
 | `C:/assets/background.jpg` | Your own image on an upright backdrop |
@@ -74,6 +76,56 @@ an error in Status. Successful scene changes reset simulated physics while
 preserving joint targets. MuJoCo's native viewer loads the selected scene at
 launch; restart it to select another one. Both viewers support camera orbit,
 pan and zoom.
+
+## Reconstructed demo classroom
+
+`scenes/demo_classroom/` is a self-contained copy of the MuJoCo export from
+AOE's `image_environments/t02_frame_smoke/`. Existing scene files and assets are
+kept alongside it. The preset name is `demo_classroom`; it describes the saved
+four-object reconstruction rather than a complete scanned classroom.
+
+From the project directory, use a Python environment with `requirements-viser.txt`
+and MuJoCo 3.10 or newer:
+
+```bash
+python scripts/run_viser.py --scene demo_classroom --no-robot
+```
+
+On the current Linux machine, the existing environment can be used directly:
+
+```bash
+/home/mihawk/anaconda3/envs/aoe_v1/bin/python /data/MeArm/scripts/run_viser.py --scene demo_classroom --no-robot
+```
+
+Open the printed local URL. The preset is also selectable under **Environment →
+Preset**. Scene-only mode has playback/reset and scene selection without arm
+controls. Omit `--no-robot` to include MeArm; it stays at the origin. The scene
+keeps its measured scale and saved poses around X=2.2 m, so this does not place
+the reconstructed objects within the small arm's reach. The camera frames visible
+geometry automatically at launch, on scene changes and for new clients.
+
+The copied objects remain static. Their four base-color textures and 49 convex
+collision parts are retained, along with the source ground plane. Colliders are
+hidden in Viser. A native MJCF import retains authored joints and collision
+settings; when combined with MeArm, object names are prefixed `environment_`
+and MeArm's physics options remain authoritative. In scene-only mode the source
+physics options and object names are retained. `--scene-pos` and `--scene-rpy`
+apply one rigid transform to the scene; native MJCF requires `--scene-scale 1`.
+
+Custom native MJCF can be selected directly with `--scene /path/to/scene.xml`,
+or referenced by a JSON preset:
+
+```json
+{
+  "version": 1,
+  "name": "My reconstructed scene",
+  "mjcf": "relative/path/to/scene.xml",
+  "objects": []
+}
+```
+
+Keep each MJCF and its referenced asset folders together. The older mesh/image
+import path below remains visual-only; the native MJCF path preserves collisions.
 
 ## Import a 3D room or background
 
@@ -112,8 +164,9 @@ Base-color textures and material colors are supported. Renderers use different
 lighting, so their images can differ. MuJoCo uses an average color for a mesh
 with per-face/per-vertex colors; split such meshes into material groups or bake
 a color texture for greater visual fidelity. Advanced PBR, normal maps,
-animations, CAD assemblies and arbitrary MJCF/USD scenes are not imported by
-this mesh loader. Use modest mesh sizes for responsive loading and interaction.
+animations, CAD assemblies and USD scenes are not imported by this mesh loader.
+For MJCF, use the native import path described above. Use modest mesh sizes for
+responsive loading and interaction.
 
 ## Import an image backdrop
 

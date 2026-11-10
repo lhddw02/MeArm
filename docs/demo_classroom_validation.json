@@ -1,0 +1,80 @@
+{
+  "date": "2026-11-10",
+  "passed": true,
+  "scene": "demo_classroom",
+  "source": "/data/AOE/aoe/image_environments/t02_frame_smoke/mujoco",
+  "existing_scene_files_preserved": {
+    "scenes/imported_room.json": "973a69a29e4a593e34b4eb7d825a5ca922f24df9cdc38a78b1231bcdeb9b1085",
+    "scenes/empty.json": "2389c6b46156bb6063601b2a722524c976a766f2263608c65a3492d242c775fc",
+    "scenes/classroom.json": "129afeed3b889dad2e00ee158cdfed22511602bca4c1029bf12e2a8fe67df75c",
+    "scenes/workshop.json": "56711643d6f6694deb8538ecf9153841aafa769dbb79e3d957c4a2177a0e6037",
+    "scenes/assets/demo_room.glb": "580981acd8066a6bf0f29892d6e2070dc2c984b89db3e355b821d1676c5b8064"
+  },
+  "copied_asset_count": 61,
+  "all_copied_asset_hashes_match": true,
+  "unit_tests": {
+    "passed": 21,
+    "failed": 0,
+    "modules": [
+      "tests.test_mjcf_environment",
+      "tests.test_scene_environment",
+      "tests.test_viser_pick_place"
+    ]
+  },
+  "saved_scene_physics_smoke": {
+    "without_robot": {
+      "geoms": 54,
+      "textures": 4,
+      "actuators": 0,
+      "steps": 20,
+      "finite": true,
+      "warnings": 0
+    },
+    "with_robot": {
+      "geoms": 78,
+      "textures": 5,
+      "actuators": 4,
+      "steps": 20,
+      "finite": true,
+      "warnings": 0
+    }
+  },
+  "final_live_viser": {
+    "scene": "demo_classroom",
+    "scene_name": "demo_classroom",
+    "physics": "MuJoCo 3.10.0",
+    "task": "scene",
+    "robot_included": false,
+    "simulation_seconds": 49.67800000001475,
+    "target_degrees": null,
+    "tcp_mm": null,
+    "pick_place": null,
+    "visual_nodes": 5,
+    "warnings": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "browser_verification": {
+    "passed": true,
+    "method": "Actual local browser screenshot of installed Viser",
+    "visible_objects": [
+      "table",
+      "rubik's cube",
+      "bottle",
+      "can"
+    ],
+    "robot_visible": false,
+    "native_texture_vertical_orientation_corrected": true
+  },
+  "source_sha256": {
+    "scripts/run_viser.py": "ecdfda6024a359b9314eee2684301240046d15a76a54001c49ef4d4374bdf00a",
+    "scripts/scene_environment.py": "ae5efb5141d014087ccf05f27d0118d0af48f6be6209118c6d952cac7fd849b3",
+    "tests/test_mjcf_environment.py": "a0cb6a1224bc8a1ff944d3ae652fbb36d17da9b7b02deb002ef009b8a3ca10d2"
+  }
+}

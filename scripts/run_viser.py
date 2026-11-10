@@ -17,6 +17,7 @@ configure_dependencies(ROOT)
 
 import mujoco
 import numpy as np
+from PIL import Image
 import trimesh
 
 if __package__:
@@ -67,6 +68,8 @@ class PhysicsSceneRenderer:
         self.static_nodes = []
         self.site_nodes = []
         self.model = model
+        self.environment = environment
+        self._visible_bounds = []
         for index in range(model.ngeom):
             name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_GEOM, index) or str(index)
             if name in environment.visual_meshes or model.geom_group[index] >= 3:
@@ -80,14 +83,23 @@ class PhysicsSceneRenderer:
             mesh = self.geometry_mesh(model, index)
             if mesh is None:
                 continue
-            node = server.scene.add_mesh_simple(
-                "/mearm/" + name, vertices=np.asarray(mesh.vertices, dtype=np.float32),
-                faces=np.asarray(mesh.faces, dtype=np.uint32),
-                color=tuple(int(v) for v in np.clip(rgba[:3] * 255, 0, 255)),
-                opacity=float(rgba[3]), side="double", flat_shading=True,
-                cast_shadow=False, receive_shadow=False)
+            if model.geom_type[index] != mujoco.mjtGeom.mjGEOM_PLANE:
+                vertices = mesh.vertices @ data.geom_xmat[index].reshape(3, 3).T + data.geom_xpos[index]
+                self._visible_bounds.append(np.array([vertices.min(axis=0), vertices.max(axis=0)]))
+            textured = self.textured_mesh(model, index, mesh, rgba)
+            if textured is not None:
+                node = server.scene.add_mesh_trimesh(
+                    "/mearm/" + name, textured, cast_shadow=False, receive_shadow=False)
+            else:
+                node = server.scene.add_mesh_simple(
+                    "/mearm/" + name, vertices=np.asarray(mesh.vertices, dtype=np.float32),
+                    faces=np.asarray(mesh.faces, dtype=np.uint32),
+                    color=tuple(int(v) for v in np.clip(rgba[:3] * 255, 0, 255)),
+                    opacity=float(rgba[3]), side="double", flat_shading=True,
+                    cast_shadow=False, receive_shadow=False)
             self.nodes.append((index, node))
         for name, mesh in environment.visual_meshes.items():
+            self._visible_bounds.append(mesh.bounds)
             self.static_nodes.append(server.scene.add_mesh_trimesh(
                 "/environment/" + name, mesh, cast_shadow=False, receive_shadow=False))
         # These task markers change visibility and position as a job runs.
@@ -111,6 +123,64 @@ class PhysicsSceneRenderer:
         background = np.array(environment.definition.get("background_rgb", [.92, .94, .96]))
         server.scene.set_background_image(np.round(background[None, None, :] * 255).astype(np.uint8))
         self.sync(data)
+
+    @staticmethod
+    def textured_mesh(model, index, mesh, rgba):
+        """Recover native MJCF UVs without mixing source and compiled mesh frames."""
+        if model.geom_type[index] != mujoco.mjtGeom.mjGEOM_MESH:
+            return None
+        material_id = int(model.geom_matid[index])
+        if material_id < 0:
+            return None
+        slots = np.asarray(model.mat_texid[material_id]).ravel()
+        # MuJoCo 3.10 uses texture-role slots; older models use one texture ID.
+        slot = int(mujoco.mjtTextureRole.mjTEXROLE_RGB) if hasattr(mujoco, "mjtTextureRole") else 0
+        texture_id = int(slots[slot if len(slots) > 1 else 0])
+        if texture_id < 0 or model.tex_type[texture_id] != mujoco.mjtTexture.mjTEXTURE_2D:
+            return None
+        mid = int(model.geom_dataid[index])
+        uv_start, uv_count = int(model.mesh_texcoordadr[mid]), int(model.mesh_texcoordnum[mid])
+        if uv_start < 0 or uv_count == 0:
+            return None
+        face_start, face_count = int(model.mesh_faceadr[mid]), int(model.mesh_facenum[mid])
+        uv_faces = model.mesh_facetexcoord[face_start:face_start + face_count]
+        if np.any(uv_faces < 0):
+            return None
+        # OBJ texture seams have independent vertex/UV indices. Splitting by
+        # the pair retains both geometry and face-average texture atlases.
+        pairs, inverse = np.unique(np.column_stack((mesh.faces.ravel(), uv_faces.ravel())),
+                                   axis=0, return_inverse=True)
+        width, height = int(model.tex_width[texture_id]), int(model.tex_height[texture_id])
+        channels = int(model.tex_nchannel[texture_id]) if hasattr(model, "tex_nchannel") else 3
+        start = int(model.tex_adr[texture_id])
+        pixels = model.tex_data if hasattr(model, "tex_data") else model.tex_rgb
+        pixels = pixels[start:start + width * height * channels].reshape(height, width, channels)
+        image = Image.fromarray(pixels.copy())
+        uv = model.mesh_texcoord[uv_start:uv_start + uv_count][pairs[:, 1]].copy()
+        # MuJoCo stores top-left texture coordinates; Trimesh expects authored
+        # bottom-left UVs and converts them to glTF conventions during export.
+        uv[:, 1] = 1 - uv[:, 1]
+        visual = trimesh.visual.texture.TextureVisuals(
+            uv=uv,
+            material=trimesh.visual.material.PBRMaterial(
+                baseColorTexture=image, baseColorFactor=np.round(np.clip(rgba, 0, 1) * 255).astype(np.uint8),
+                doubleSided=True, metallicFactor=0., roughnessFactor=1.))
+        return trimesh.Trimesh(vertices=mesh.vertices[pairs[:, 0]],
+                               faces=inverse.reshape(-1, 3), visual=visual, process=False)
+
+    def camera_view(self):
+        """Frame native scenes at their saved world location, excluding planes."""
+        if not self.environment.definition.get("mjcf") or not self._visible_bounds:
+            return dict(position=np.array([-.42, -.40, .30]), look_at=np.array([.07, 0, .10]),
+                        near=.001, far=100.)
+        bounds = np.asarray(self._visible_bounds)
+        lower, upper = bounds[:, 0].min(axis=0), bounds[:, 1].max(axis=0)
+        center = (lower + upper) / 2
+        radius = max(float(np.linalg.norm(upper - lower)) / 2, .1)
+        direction = np.array([-.8, -1., .65])
+        direction /= np.linalg.norm(direction)
+        return dict(position=center + direction * radius * 3.5, look_at=center,
+                    near=max(.001, radius / 1000), far=max(100., radius * 20))
 
     @staticmethod
     def geometry_mesh(model, index):
@@ -168,9 +238,13 @@ class PhysicsSceneRenderer:
 class ViserSimulation:
     """GUI callbacks queue commands; only the simulation thread edits physics."""
 
-    def __init__(self, server, scene="empty", *, task="arm", scene_options=None, demo=False):
+    def __init__(self, server, scene="empty", *, task="arm", scene_options=None, demo=False,
+                 include_robot=True):
+        if not include_robot and (task != "arm" or demo):
+            raise ValueError("--no-robot cannot be combined with --task cubes or --demo.")
         self.server = server
         self.task = task
+        self.include_robot = include_robot
         self.scene_options = scene_options or {}
         self.commands = queue.Queue()
         self.renderer = None
@@ -192,10 +266,11 @@ class ViserSimulation:
             else:
                 from cube_scene import build_scene_xml
             base_xml = build_scene_xml(grasp_ready=True)
-        model, data, environment = load_environment(reference, base_xml=base_xml, **self.scene_options)
+        model, data, environment = load_environment(reference, base_xml=base_xml,
+                                                    include_robot=self.include_robot, **self.scene_options)
         motion = CubeSceneController(model, data) if self.task == "cubes" else None
-        arm = motion.arm if motion is not None else MeArmController(model, data)
-        if hasattr(self, "arm"):
+        arm = (motion.arm if motion is not None else MeArmController(model, data)) if self.include_robot else None
+        if arm is not None and getattr(self, "arm", None) is not None:
             arm.set_joint_targets(*self.arm.target_degrees)
         # Import/compile must succeed before removing the current scene.
         if self.renderer is not None:
@@ -205,40 +280,50 @@ class ViserSimulation:
         self.pick_task = PickPlaceTask(motion) if motion is not None else None
         self.scene_reference = str(reference)
         self.renderer = PhysicsSceneRenderer(self.server, model, data, environment)
+        for client in getattr(self.server, "get_clients", lambda: {})().values():
+            self.configure_client_camera(client)
+
+    def configure_client_camera(self, client):
+        for key, value in self.renderer.camera_view().items():
+            setattr(client.camera, key, value)
+        client.camera.up_direction = (0, 0, 1)
 
     def make_gui(self):
         gui = self.server.gui
         gui.configure_theme(dark_mode=False)
         gui.set_panel_label("MeArm simulation")
-        gui.add_markdown("**MuJoCo physics · Viser viewer**\n\nJoint angles: degrees. Tool targets: millimetres. X forward, Y left, Z up.")
+        gui.add_markdown("**MuJoCo physics · Viser viewer**\n\n" + (
+            "Joint angles: degrees. Tool targets: millimetres. X forward, Y left, Z up."
+            if self.include_robot else "Environment only. Coordinates: metres, Z up."))
         with gui.add_folder("Environment"):
             self.preset_dropdown = gui.add_dropdown(
                 "Preset", (*PRESETS, "Custom file"),
                 initial_value=self.scene_reference if self.scene_reference in PRESETS else "Custom file")
             self.preset_dropdown.on_update(lambda event: self.commands.put(("scene", event.target.value))
                                           if event.target.value in PRESETS else None)
-            self.scene_path = gui.add_text("Scene / mesh / image path", initial_value=self.scene_reference)
+            self.scene_path = gui.add_text("Scene / MJCF / mesh / image path", initial_value=self.scene_reference)
             self.load_button = gui.add_button("Load scene")
             self.load_button.on_click(lambda _: self.commands.put(("scene", self.scene_path.value)))
-            gui.add_markdown("Paths are read on the Python server. JSON supports multiple objects, transforms and collision proxies.")
-        with gui.add_folder("Joint controls"):
-            self.sliders = []
-            labels = ("Yaw", "Shoulder elevation", "Forearm elevation", "Jaw opening")
-            for index, (label, bounds, value) in enumerate(zip(labels, self.arm.limits_degrees, self.arm.target_degrees)):
-                slider = gui.add_slider(label, min=float(bounds[0]), max=float(bounds[1]),
-                                        step=.1, initial_value=float(value))
-                def on_joint(event, joint_index=index):
-                    if not self._setting_widgets:
-                        self.commands.put(("joint", (joint_index, float(event.target.value))))
-                slider.on_update(on_joint)
-                self.sliders.append(slider)
-            self.home_button = gui.add_button("Home")
-            self.home_button.on_click(lambda _: self.commands.put(("home", None)))
-        with gui.add_folder("Tool target"):
-            self.xyz = [gui.add_number(axis + " (mm)", initial_value=value, step=1.)
-                        for axis, value in zip("XYZ", (148., 0., 135.))]
-            self.reach_button = gui.add_button("Reach target")
-            self.reach_button.on_click(lambda _: self.commands.put(("xyz", [field.value for field in self.xyz])))
+            gui.add_markdown("Paths are read on the Python server. Native MJCF retains its geometry, materials and collisions.")
+        self.sliders = []
+        if self.arm is not None:
+            with gui.add_folder("Joint controls"):
+                labels = ("Yaw", "Shoulder elevation", "Forearm elevation", "Jaw opening")
+                for index, (label, bounds, value) in enumerate(zip(labels, self.arm.limits_degrees, self.arm.target_degrees)):
+                    slider = gui.add_slider(label, min=float(bounds[0]), max=float(bounds[1]),
+                                            step=.1, initial_value=float(value))
+                    def on_joint(event, joint_index=index):
+                        if not self._setting_widgets:
+                            self.commands.put(("joint", (joint_index, float(event.target.value))))
+                    slider.on_update(on_joint)
+                    self.sliders.append(slider)
+                self.home_button = gui.add_button("Home")
+                self.home_button.on_click(lambda _: self.commands.put(("home", None)))
+            with gui.add_folder("Tool target"):
+                self.xyz = [gui.add_number(axis + " (mm)", initial_value=value, step=1.)
+                            for axis, value in zip("XYZ", (148., 0., 135.))]
+                self.reach_button = gui.add_button("Reach target")
+                self.reach_button.on_click(lambda _: self.commands.put(("xyz", [field.value for field in self.xyz])))
         if self.task == "cubes":
             with gui.add_folder("Pick and place"):
                 self.cube_color = gui.add_dropdown("Cube color", [cube["name"] for cube in CUBES], initial_value="red")
@@ -257,14 +342,15 @@ class ViserSimulation:
                 gui.add_markdown("20 mm cubes. Place XYZ is the **cube center**; use Z=90 on this tabletop. "
                                  "The green square marks the destination. Pause freezes the sequence; Cancel returns joint control.")
         with gui.add_folder("Playback"):
-            self.demo_checkbox = gui.add_checkbox("Joint demo", initial_value=self.demo)
-            self.demo_checkbox.on_update(lambda event: self.commands.put(("demo", bool(event.target.value))))
+            if self.arm is not None:
+                self.demo_checkbox = gui.add_checkbox("Joint demo", initial_value=self.demo)
+                self.demo_checkbox.on_update(lambda event: self.commands.put(("demo", bool(event.target.value))))
             self.pause_checkbox = gui.add_checkbox("Pause physics", initial_value=False)
             self.pause_checkbox.on_update(lambda event: self.commands.put(("pause", bool(event.target.value))))
             self.reset_button = gui.add_button("Reset physics")
             self.reset_button.on_click(lambda _: self.commands.put(("reset", None)))
         self.status = gui.add_text("Status", initial_value="Ready: " + self.environment.name, disabled=True)
-        self.tcp = gui.add_text("Current tool XYZ (mm)", initial_value="", disabled=True)
+        self.tcp = gui.add_text("Current tool XYZ (mm)", initial_value="", disabled=True) if self.arm is not None else None
         self.refresh_pick_panel()
 
     def start_pick_place(self, color, destination_mm, move_seconds=2., clearance_mm=35.):
@@ -311,9 +397,10 @@ class ViserSimulation:
         self._setting_widgets = True
         try:
             with self.server.atomic():
-                for slider, value in zip(self.sliders, self.arm.target_degrees):
-                    slider.value = float(value)
-                self.demo_checkbox.value = self.demo
+                if self.arm is not None:
+                    for slider, value in zip(self.sliders, self.arm.target_degrees):
+                        slider.value = float(value)
+                    self.demo_checkbox.value = self.demo
                 self.preset_dropdown.value = self.scene_reference if self.scene_reference in PRESETS else "Custom file"
         finally:
             self._setting_widgets = False
@@ -322,6 +409,8 @@ class ViserSimulation:
         while not self.commands.empty():
             command, value = self.commands.get_nowait()
             try:
+                if self.arm is None and command in ("joint", "home", "xyz", "demo"):
+                    raise ValueError("Robot controls are unavailable with --no-robot.")
                 if self.pick_task is not None and self.pick_task.active and command not in ("pause", "cancel_pick", "reset"):
                     raise ValueError("Pick and place is running. Cancel it before changing joints, targets or scenes.")
                 if command == "scene":
@@ -384,17 +473,19 @@ class ViserSimulation:
         # mj_step leaves position-dependent data at the start of the last step.
         mujoco.mj_forward(self.model, self.data)
         self.renderer.sync(self.data)
-        self.tcp.value = ", ".join(f"{v:.1f}" for v in self.arm.tcp_position_mm)
+        if self.tcp is not None:
+            self.tcp.value = ", ".join(f"{v:.1f}" for v in self.arm.tcp_position_mm)
         if was_picking:
             self.update_widgets()
         self.refresh_pick_panel()
 
     def report(self):
         return {"scene": self.scene_reference, "scene_name": self.environment.name,
-                "physics": "MuJoCo " + mujoco.__version__, "task": self.task,
+                "physics": "MuJoCo " + mujoco.__version__, "task": self.task if self.include_robot else "scene",
+                "robot_included": self.include_robot,
                 "simulation_seconds": float(self.data.time),
-                "target_degrees": self.arm.target_degrees.tolist(),
-                "tcp_mm": self.arm.tcp_position_mm.tolist(),
+                "target_degrees": None if self.arm is None else self.arm.target_degrees.tolist(),
+                "tcp_mm": None if self.arm is None else self.arm.tcp_position_mm.tolist(),
                 "pick_place": None if self.pick_task is None else self.pick_task.report(),
                 "visual_nodes": len(self.renderer.nodes) + len(self.renderer.static_nodes) + len(self.renderer.site_nodes),
                 "warnings": [int(w.number) for w in self.data.warning]}
@@ -406,6 +497,7 @@ def main(argv=None):
     parser.add_argument("--host", default="127.0.0.1", help="Bind address; default local computer only")
     parser.add_argument("--port", type=int, default=8080)
     parser.add_argument("--task", choices=("arm", "cubes"), default="arm", help="Cubes/platform are opt-in")
+    parser.add_argument("--no-robot", action="store_true", help="Load only the environment, without MeArm or robot controls")
     parser.add_argument("--demo", action="store_true")
     parser.add_argument("--open-browser", action="store_true", help="Open the actual local server URL in your default browser")
     parser.add_argument("--cube", choices=[cube['name'] for cube in CUBES], help="Start an automatic pick; requires --task cubes --place-mm X Y Z")
@@ -415,6 +507,8 @@ def main(argv=None):
     parser.add_argument("--seconds", type=float, help="Stop after this many wall-clock seconds (for smoke checks)")
     parser.add_argument("--report", type=Path)
     args = parser.parse_args(argv)
+    if args.no_robot and (args.task != "arm" or args.demo):
+        parser.error("--no-robot cannot be combined with --task cubes or --demo.")
     if (args.cube is None) != (args.place_mm is None):
         parser.error("Use --cube COLOR together with --place-mm X Y Z.")
     if args.cube is not None and (args.task != "cubes" or args.demo):
@@ -430,7 +524,8 @@ def main(argv=None):
     server = viser.ViserServer(host=args.host, port=args.port, label="MeArm")
     app = None
     try:
-        app = ViserSimulation(server, args.scene, task=args.task, scene_options=scene_kwargs(args), demo=args.demo)
+        app = ViserSimulation(server, args.scene, task=args.task, scene_options=scene_kwargs(args),
+                              demo=args.demo, include_robot=not args.no_robot)
         if args.cube is not None:
             app.cube_color.value = args.cube
             for widget, value in zip(app.place_xyz, args.place_mm):
@@ -441,11 +536,7 @@ def main(argv=None):
 
         @server.on_client_connect
         def on_connect(client):
-            client.camera.position = (-.42, -.40, .30)
-            client.camera.look_at = (.07, 0, .10)
-            client.camera.up_direction = (0, 0, 1)
-            client.camera.near = .001
-            client.camera.far = 100
+            app.configure_client_camera(client)
 
         print(f"MeArm Viser: http://{args.host}:{server.get_port()}", flush=True)
         print(f"Scene: {app.environment.name}; physics: MuJoCo; Ctrl+C stops the server.", flush=True)

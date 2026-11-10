@@ -48,7 +48,7 @@ See the [pick-and-place guide](docs/pick_and_place.md) and
 
 MuJoCo and Viser default to an **empty environment** with the arm and a plain
 support floor. Both accept the same `--scene` option: `empty`, `workshop`,
-`classroom`, a custom scene JSON, a GLB/GLTF/OBJ/STL/PLY model, or a PNG/JPG
+`classroom`, `demo_classroom`, a custom scene JSON/MJCF XML, a GLB/GLTF/OBJ/STL/PLY model, or a PNG/JPG
 backdrop. Viser displays MuJoCo physics in a browser with joint sliders,
 XYZ targets and live scene selection.
 
@@ -60,6 +60,19 @@ After creating the Windows environment using [install.md](install.md), run:
 ```
 
 Open the Viser URL printed in the terminal, normally **http://127.0.0.1:8080**.
+The reconstructed single-image scene can be opened without a robot:
+
+```bash
+python scripts/run_viser.py --scene demo_classroom --no-robot
+```
+
+Omit `--no-robot` to include MeArm at its original base position. The viewer frames
+the imported scene automatically without moving its objects. This preset contains
+the copied table, Rubik's cube, bottle and can from AOE's `t02_frame_smoke` export,
+with static collision geometry and textures in `scenes/demo_classroom/`.
+Native MJCF import requires MuJoCo 3.10 or newer; mesh/JSON backgrounds retain
+their previous behavior. See [the scene guide](docs/scene_environments.md#reconstructed-demo-classroom).
+
 For another scene:
 
 ```powershell

@@ -1,8 +1,8 @@
 """Shared, static scene imports for MuJoCo and the physics-backed Viser viewer.
 
 All coordinates are metres, Z up. Backgrounds never change the arm's joints,
-actuators, or base frame. Imported meshes are visual-only; simple primitives
-can explicitly enable collision. No user scene is executed as Python code.
+actuators, or base frame. Imported meshes are visual-only; native MJCF scenes
+retain their collision geometry and physics. No user scene is executed as Python code.
 """
 from __future__ import annotations
 
@@ -27,7 +27,15 @@ import trimesh
 
 MESH_EXTENSIONS = {".glb", ".gltf", ".obj", ".stl", ".ply"}
 IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg"}
-PRESETS = ("empty", "workshop", "classroom")
+PRESETS = ("empty", "workshop", "classroom", "demo_classroom")
+
+BLANK_SCENE_XML = """<mujoco model="environment_only">
+  <compiler angle="radian"/>
+  <option timestep="0.002" gravity="0 0 -9.81"/>
+  <visual><map znear="0.001" zfar="500"/></visual>
+  <asset/>
+  <worldbody><light directional="true" pos="0 0 3" dir="-1 -1 -2"/></worldbody>
+</mujoco>"""
 
 
 def vector(value, length, label, *, positive=False):
@@ -85,13 +93,15 @@ def read_environment(reference="empty"):
     candidate = candidate.resolve()
     if not candidate.is_file():
         raise ValueError(f"Scene not found: {reference}. Choose {', '.join(PRESETS)}, "
-                         "a scene JSON, a GLB/GLTF/OBJ/STL/PLY, or a PNG/JPG.")
+                         "a scene JSON, native MJCF XML, a GLB/GLTF/OBJ/STL/PLY, or a PNG/JPG.")
     suffix = candidate.suffix.lower()
     if suffix == ".json":
         try:
             definition = json.loads(candidate.read_text(encoding="utf-8-sig"))
         except (OSError, UnicodeError, json.JSONDecodeError) as exc:
             raise ValueError(f"Cannot read scene JSON: {exc}") from exc
+    elif suffix == ".xml":
+        definition = {"version": 1, "name": candidate.stem, "mjcf": str(candidate), "objects": []}
     elif suffix in MESH_EXTENSIONS | IMAGE_EXTENSIONS:
         definition = {"version": 1, "name": candidate.stem, "objects": [
             {"name": "imported", "type": "mesh" if suffix in MESH_EXTENSIONS else "image",
@@ -100,11 +110,21 @@ def read_environment(reference="empty"):
         raise ValueError(f"Unsupported scene file: {suffix}")
     if not isinstance(definition, dict) or definition.get("version") != 1:
         raise ValueError("Scene JSON needs version=1 and an objects array.")
-    allowed = {"version", "name", "background_rgb", "floor_rgba", "objects"}
+    allowed = {"version", "name", "background_rgb", "floor_rgba", "objects", "mjcf"}
     if set(definition) - allowed:
         raise ValueError("Unknown scene fields: " + ", ".join(sorted(set(definition) - allowed)))
     if not isinstance(definition.get("objects"), list):
         raise ValueError("Scene objects must be an array.")
+    if "mjcf" in definition:
+        if not isinstance(definition["mjcf"], str) or not definition["mjcf"].strip():
+            raise ValueError("Scene mjcf must be a non-empty file path.")
+        if definition["objects"]:
+            raise ValueError("A native MJCF scene cannot also contain JSON objects.")
+        mjcf_path = (candidate.parent / definition["mjcf"]).expanduser().resolve()
+        if not mjcf_path.is_file():
+            raise ValueError(f"Scene MJCF not found: {mjcf_path}")
+        if mjcf_path.suffix.lower() != ".xml":
+            raise ValueError("Scene mjcf must reference an XML file.")
     color = vector(definition.get("background_rgb", [.92, .94, .96]), 3, "Background RGB")
     if np.any(color < 0) or np.any(color > 1):
         raise ValueError("Background RGB must be within [0, 1].")
@@ -321,7 +341,76 @@ def compose_environment(reference="empty", *, base_xml=None, position=(0, 0, 0),
     return ET.tostring(root, encoding="unicode"), environment
 
 
-def load_environment(reference="empty", **kwargs):
+def _transform_native_world(spec, position, rpy):
+    """Add one rigid frame without rewriting source poses or compiler units."""
+    matrix = transform_matrix(position, rpy)
+    if np.allclose(matrix, np.eye(4), rtol=0, atol=1e-14):
+        return
+    world = spec.worldbody
+    # Snapshot existing roots before adding our frame; existing MJCF frames
+    # remain nested so their original local transforms are preserved.
+    frames = list(world.frames)
+    elements = [item for group in (world.bodies, world.geoms, world.sites,
+                                   world.cameras, world.lights) for item in group]
+    outer = world.add_frame(pos=matrix[:3, 3],
+                            quat=trimesh.transformations.quaternion_from_matrix(matrix))
+    for frame in frames:
+        if frame.frame is None:
+            frame.set_frame(outer)
+    for item in elements:
+        if item.frame is None:
+            item.set_frame(outer)
+
+
+def _load_native_environment(environment, *, include_robot, base_xml=None,
+                             position=(0, 0, 0), rpy=(0, 0, 0), scale=1):
+    # Scaling an articulated MJCF requires coordinated changes to inertias,
+    # joints and actuator parameters; an apparent mesh-only scale is unsafe.
+    if not np.array_equal(scale_vector(scale), np.ones(3)):
+        raise ValueError("Native MJCF scenes require --scene-scale 1; convert units in the source MJCF.")
+    matrix = transform_matrix(position, rpy)
+    if not hasattr(mujoco.MjSpec, "attach"):
+        raise ValueError("Native MJCF scene imports require MuJoCo 3.10 or newer. "
+                         "Install mujoco>=3.10,<4 in this Python environment.")
+    path = (environment.directory / environment.definition["mjcf"]).expanduser().resolve()
+    try:
+        source = mujoco.MjSpec.from_file(str(path))
+        if include_robot:
+            # The established base importer sets absolute arm mesh paths and
+            # retains all existing arm joints, actuators and constraints.
+            xml, _ = compose_environment("empty", base_xml=base_xml)
+            base_root = ET.fromstring(xml)
+            # Two coincident support planes cause unnecessary contact pairs.
+            if any(geom.type == mujoco.mjtGeom.mjGEOM_PLANE for geom in source.geoms):
+                for geom in list(base_root.findall("worldbody/geom[@type='plane']")):
+                    base_root.find("worldbody").remove(geom)
+            parent = mujoco.MjSpec.from_string(ET.tostring(base_root, encoding="unicode"))
+            frame = parent.worldbody.add_frame(
+                pos=matrix[:3, 3], quat=trimesh.transformations.quaternion_from_matrix(matrix))
+            # Native attachment keeps asset paths relative to the source file
+            # and prefixes references as well as names to avoid arm collisions.
+            parent.attach(source, frame=frame, prefix="environment_")
+            model = parent.compile()
+        else:
+            if base_xml is not None:
+                raise ValueError("An arm/task base model cannot be combined with include_robot=False.")
+            _transform_native_world(source, position, rpy)
+            model = source.compile()
+    except (ValueError, OSError) as exc:
+        raise ValueError(f"Cannot compile scene '{environment.name}': {exc}") from exc
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    return model, data, environment
+
+
+def load_environment(reference="empty", *, include_robot=True, **kwargs):
+    environment = read_environment(reference)
+    if "mjcf" in environment.definition:
+        return _load_native_environment(environment, include_robot=include_robot, **kwargs)
+    if not include_robot:
+        if kwargs.get("base_xml") is not None:
+            raise ValueError("An arm/task base model cannot be combined with include_robot=False.")
+        kwargs["base_xml"] = BLANK_SCENE_XML
     xml, environment = compose_environment(reference, **kwargs)
     try:
         model = mujoco.MjModel.from_xml_string(xml, assets=environment.assets)
@@ -333,7 +422,7 @@ def load_environment(reference="empty", **kwargs):
 
 
 def add_scene_arguments(parser):
-    parser.add_argument("--scene", default="empty", help="empty (default), workshop, classroom, JSON, mesh or image path")
+    parser.add_argument("--scene", default="empty", help="empty (default), workshop, classroom, demo_classroom, JSON, MJCF XML, mesh or image path")
     parser.add_argument("--scene-scale", type=float, default=1, help="Environment unit conversion, e.g. .001 for mm meshes")
     parser.add_argument("--scene-pos", type=float, nargs=3, default=(0, 0, 0), metavar=("X", "Y", "Z"), help="Environment offset in metres")
     parser.add_argument("--scene-rpy", type=float, nargs=3, default=(0, 0, 0), metavar=("ROLL", "PITCH", "YAW"), help="Environment rotation in degrees")

@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "name": "demo_classroom",
+  "background_rgb": [0.92, 0.94, 0.96],
+  "mjcf": "demo_classroom/scene.xml",
+  "objects": []
+}

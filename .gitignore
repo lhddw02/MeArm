@@ -3,3 +3,6 @@
 __pycache__/
 *.pyc
 tmp/
+
+# Generated reconstructed environment assets
+/scenes/demo_classroom/
